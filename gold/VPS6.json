@@ -1,0 +1,40 @@
+{
+  "sku": "VPS6",
+  "upc": "351072092029",
+  "expected_draft": {
+    "title": "TiaGard® 12.5% (tiamulin hydrogen fumarate) Liquid Concentrate for Swine Dysentery & Pneumonia Treatment",
+    "product_type": "",
+    "vendor": "TiaGard",
+    "tags": ["CatalogRef: VPS5", "New Arrival"],
+    "price": 24.99,
+    "barcode": "351072092029",
+    "metafields": {
+      "custom.animal": ["Swine"],
+      "custom.sizes": ["1 L"],
+      "custom.prescription_rx_": false,
+      "custom.vendor": "Aurora Pharmaceutical",
+      "custom.is_merck": false,
+      "custom.pgc": "73",
+      "custom.department": "Animal Health & Wellness",
+      "custom.category": "Medicine",
+      "custom.product_types": ["Scours", "Concentrate", "Pneumonia", "Diarrhea", "Oral"],
+      "info.form": ["Solution", "Drinking Water"],
+      "compliance.prop_65": true,
+      "compliance.california_signature_required": false
+    },
+    "variant_metafields": {
+      "custom.hazardous": false,
+      "custom.ormd": false,
+      "custom.biological": false,
+      "custom.dropship": false,
+      "custom.fob": false
+    }
+  },
+  "findable_facts": {
+    "info.ingredients": "12.5% tiamulin hydrogen fumarate",
+    "custom.country_of_origin": "United States",
+    "variant.weight_lb": 2.4
+  },
+  "expected_flags": ["PROP-01", "HANDLE-01"],
+  "notes": "Source: Shopify product 15407190147261 / variant 67664339665085 (handle tiagard-f-style), pulled 2026-10-12. Metafield keys match the store schema; variant_metafields are owned by the variant. info.ingredients cleaned of its 'Active Ingredient:' prefix. Weight is the variant weight, not a metafield."
+}

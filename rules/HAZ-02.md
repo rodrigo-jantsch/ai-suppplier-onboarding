@@ -1,6 +1,6 @@
 id: HAZ-02
-title: Aerosol shipping restriction
-trigger: Product form is aerosol, or the product page or SDS lists UN1950
-action: custom.hazmat = true; add tag "ship-ground-only"; status = needs review
-reason: Aerosols can't ship by air.
+title: HAZ shipping restriction
+trigger: Product has a hazardous identification in the incoming CSV.
+action: custom.hazardous = true
+reason: Haz have shipping restrictions
 note: Illustrative rule for this project, not legal guidance.

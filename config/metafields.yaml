@@ -1,59 +1,166 @@
-# Metafields per product type. `type` is the Shopify metafield type,
-# which becomes the Matrixify column: Metafield: custom.<key> [<type>]
+# Metafields per product type.
+# Each entry becomes a Matrixify column:
+#   product entries -> "Metafield: <namespace>.<key> [<type>]"
+#   variant entries -> "Variant Metafield: <namespace>.<key> [<type>]"
+# `column` overrides the generated header where Matrixify uses a special name
+# (SEO title/description are global.title_tag / global.description_tag in
+# Shopify, but Matrixify exports them without the namespace).
 
 shared:            # apply to every product type
-  - key: species
-    type: list.single_line_text_field
-    required: true
-    allowed: [Dog, Cat, Horse, Livestock, Bird, Small Animal]
-  - key: size
-    type: single_line_text_field
-    required: true
-    unit_note: "Normalize to oz, lb, ml or count, e.g. '16 oz', '30 lb', '60 count'"
-  - key: weight_lb
-    type: number_decimal
-    required: false
-  - key: hazmat
-    type: boolean
-    required: true
-  - key: rx_required
-    type: boolean
-    required: true
+  product:
+    # SEO
+    - namespace: global
+      key: title_tag
+      type: string
+      column: "Metafield: title_tag [string]"
+    - namespace: global
+      key: description_tag
+      type: string
+      column: "Metafield: description_tag [string]"
+
+    # Compliance
+    - namespace: compliance
+      key: prop_65
+      type: boolean
+    - namespace: shopify
+      key: disclosure
+      type: list.disclosure_reference
+    - namespace: compliance
+      key: california_signature_required
+      type: boolean
+
+    # Brand / sourcing
+    - namespace: custom
+      key: is_merck
+      type: boolean
+    - namespace: custom
+      key: pgc
+      type: single_line_text_field
+    - namespace: custom
+      key: vendor
+      type: single_line_text_field
+    - namespace: custom
+      key: prescription_rx_
+      type: boolean
+    - namespace: custom
+      key: country_of_origin
+      type: single_line_text_field
+
+    # Filtering attributes
+    - namespace: custom
+      key: product_types
+      type: list.single_line_text_field
+    - namespace: custom
+      key: conditions
+      type: list.single_line_text_field
+    - namespace: custom
+      key: pest_type
+      type: list.single_line_text_field
+    - namespace: custom
+      key: life_stage
+      type: list.single_line_text_field
+    - namespace: custom
+      key: animal
+      type: list.single_line_text_field
+    - namespace: custom
+      key: discipline
+      type: list.single_line_text_field
+    - namespace: custom
+      key: prevention_type
+      type: list.single_line_text_field
+    - namespace: custom
+      key: special_feature
+      type: list.single_line_text_field
+
+    # Taxonomy
+    - namespace: custom
+      key: category
+      type: single_line_text_field
+    - namespace: custom
+      key: department
+      type: single_line_text_field
+    - namespace: custom
+      key: subcategory
+      type: single_line_text_field
+
+    # Product info
+    - namespace: info
+      key: ingredients
+      type: single_line_text_field
+    - namespace: info
+      key: form
+      type: list.single_line_text_field
+    - namespace: info
+      key: material
+      type: list.single_line_text_field
+    - namespace: info
+      key: denier
+      type: list.single_line_text_field
+
+  variant:
+    - namespace: custom
+      key: shipping_restriction
+      type: list.single_line_text_field
+    - namespace: custom
+      key: biological
+      type: boolean
+    - namespace: custom
+      key: hazardous
+      type: boolean
+    - namespace: custom
+      key: ormd
+      type: boolean
+    - namespace: custom
+      key: dropship
+      type: boolean
+    - namespace: custom
+      key: fob
+      type: boolean
 
 by_type:
   flea-tick/sprays:
-    - key: active_ingredients
+    - namespace: custom
+      key: active_ingredients
       type: list.single_line_text_field
       required: true
-    - key: protection_duration
+    - namespace: custom
+      key: protection_duration
       type: single_line_text_field
       required: false
-    - key: epa_registration
+    - namespace: custom
+      key: epa_registration
       type: single_line_text_field
       required: false
-    - key: form
+    - namespace: custom
+      key: form
       type: single_line_text_field
       required: true
       allowed: [Pump Spray, Aerosol]
   dewormers:
-    - key: active_ingredients
+    - namespace: custom
+      key: active_ingredients
       type: list.single_line_text_field
       required: true
-    - key: worms_treated
+    - namespace: custom
+      key: worms_treated
       type: list.single_line_text_field
       required: true
-    - key: form
+    - namespace: custom
+      key: form
       type: single_line_text_field
       required: true
       allowed: [Tablet, Chewable, Liquid, Granules, Paste]
   supplements/joint:
-    - key: active_ingredients
+    - namespace: custom
+      key: active_ingredients
       type: list.single_line_text_field
       required: true
-    - key: form
+    - namespace: custom
+      key: form
       type: single_line_text_field
       required: true
       allowed: [Soft Chew, Tablet, Powder, Liquid]
-    - key: count
+    - namespace: custom
+      key: count
       type: number_integer
       required: false
