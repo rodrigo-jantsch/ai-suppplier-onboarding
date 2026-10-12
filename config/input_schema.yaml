@@ -1,0 +1,30 @@
+# The standard input every supplier CSV is mapped to.
+# `aliases` are lowercase column names seen in supplier files.
+# When a new supplier sends an unknown header, ingest.py asks the LLM once
+# and you add the confirmed answer here.
+
+fields:
+  sku:
+    required: true
+    aliases: [sku, supplier_sku, item_no, "item #", item_number, part_no]
+  upc:
+    required: false
+    aliases: [upc, upc_code, gtin, barcode, ean]
+  brand:
+    required: false
+    aliases: [brand, mfr, manufacturer, vendor]
+  name:
+    required: true
+    aliases: [name, item_name, product_name, description_short, title]
+  description:
+    required: false
+    aliases: [desc, description, long_desc, features]
+  size:
+    required: false
+    aliases: [size, pack_size, unit_size, net_wt, net_weight]
+  cost:
+    required: false
+    aliases: [cost, unit_cost, wholesale, dealer_cost]
+  msrp:
+    required: false
+    aliases: [msrp, retail, srp, list_price]

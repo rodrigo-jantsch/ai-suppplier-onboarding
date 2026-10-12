@@ -1,0 +1,20 @@
+# 2-3 retailer sites to look up products on.
+# Before adding a site: open https://<site>/robots.txt and confirm product and
+# search pages aren't disallowed, and read the site's terms of use.
+# Fill these in during Weekend 1; leave enabled: false until checked.
+
+sites:
+  - name: competitor_a
+    base_url: "https://www.valleyvet.com/"
+    search_url: "https://www.valleyvet.com/shop/?search_query=={query}"
+    product_path_hint: "/"   # helps spot product URLs in search results
+    is_shopify: false                 # true -> also try /products/<handle>.json
+    robots_checked: false
+    enabled: false
+  - name: competitor_b
+    base_url: "https://www.chewy.com/"
+    search_url: "https://www.chewy.com/s?query={query}"
+    product_path_hint: "/"
+    is_shopify: false
+    robots_checked: false
+    enabled: false

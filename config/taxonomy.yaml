@@ -1,0 +1,37 @@
+# Store product types. Starter set of 8; grow to ~30 in Weekend 1.
+# Descriptions and keywords are what gets embedded for retrieval,
+# so write them the way a supplier might describe the product.
+
+types:
+  - id: flea-tick/sprays
+    name: "Flea & Tick > Sprays"
+    description: Topical sprays that kill or repel fleas and ticks on pets or in the home.
+    keywords: [flea spray, tick spray, pump spray, aerosol, permethrin, pyrethrin]
+  - id: flea-tick/spot-on
+    name: "Flea & Tick > Spot-On Treatments"
+    description: Monthly liquid applied to the skin between the shoulder blades.
+    keywords: [spot on, topical, monthly, applicator, pipette]
+  - id: flea-tick/collars
+    name: "Flea & Tick > Collars"
+    description: Collars that release flea and tick protection over several months.
+    keywords: [collar, 8 month, long lasting]
+  - id: dewormers
+    name: "Dewormers"
+    description: Products that treat or prevent intestinal worms such as roundworms and tapeworms.
+    keywords: [dewormer, wormer, praziquantel, pyrantel, fenbendazole]
+  - id: supplements/joint
+    name: "Supplements > Hip & Joint"
+    description: Chews or powders that support joint health and mobility.
+    keywords: [glucosamine, chondroitin, msm, joint, mobility, hip]
+  - id: food/dry-dog
+    name: "Food > Dry Dog Food"
+    description: Kibble for dogs, sold by bag weight.
+    keywords: [kibble, dry food, dog food, lb bag, grain free]
+  - id: food/dry-cat
+    name: "Food > Dry Cat Food"
+    description: Kibble for cats, sold by bag weight.
+    keywords: [kibble, dry food, cat food, indoor formula]
+  - id: grooming/shampoo
+    name: "Grooming > Shampoo"
+    description: Shampoos and rinses for bathing pets, including medicated and oatmeal formulas.
+    keywords: [shampoo, oatmeal, medicated, conditioner, bath]

@@ -1,0 +1,27 @@
+# Model and run settings. Change models here, not in code.
+llm:
+  provider: gemini             # gemini (free tier, hosted) or ollama (local)
+  chat_model: gemini-3.5-flash-lite # if you hit free-tier limits, try gemini-3.5-flash-lite
+                               # current free models + limits: https://aistudio.google.com/rate-limit
+  ollama_chat_model: gemma4    # only used when provider: ollama (needs ~8 GB+ RAM)
+  temperature: 0               # applied for ollama; gemini relies on the JSON schema
+  max_retries: 1               # retry once if the JSON fails schema validation
+
+embeddings:
+  provider: ollama             # small local model, fine on 4 GB RAM
+  model: nomic-embed-text
+
+retrieval:
+  taxonomy_top_k: 5
+  rules_top_k: 5
+  examples_top_k: 3
+  rrf_k: 60
+
+enrichment:
+  max_tool_calls: 12
+  max_sites: 3
+  seconds_per_sku: 60
+  request_delay_seconds: 3
+
+validation:
+  quote_match_threshold: 90    # rapidfuzz score (0-100)

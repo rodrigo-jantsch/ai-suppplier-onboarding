@@ -1,0 +1,24 @@
+{
+  "sku": "SUPPLIER-SKU",
+  "upc": "000000000000",
+  "expected_draft": {
+    "title": "Brand Product Name for Species, Size",
+    "product_type": "Flea & Tick > Sprays",
+    "vendor": "Brand",
+    "tags": ["flea-tick", "dog"],
+    "price": 0.0,
+    "barcode": "000000000000",
+    "metafields": {
+      "custom.species": ["Dog"],
+      "custom.size": "16 oz",
+      "custom.hazmat": false,
+      "custom.rx_required": false
+    }
+  },
+  "findable_facts": {
+    "custom.active_ingredients": ["Ingredient X%"],
+    "custom.weight_lb": 1.1
+  },
+  "expected_flags": ["HAZ-02"],
+  "notes": "Copy this file to gold/<sku>.json for each test SKU. expected_draft = what the CSV alone supports; findable_facts = what a correct competitor lookup should add; expected_flags = rule IDs that must fire."
+}

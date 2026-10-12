@@ -1,0 +1,59 @@
+# Metafields per product type. `type` is the Shopify metafield type,
+# which becomes the Matrixify column: Metafield: custom.<key> [<type>]
+
+shared:            # apply to every product type
+  - key: species
+    type: list.single_line_text_field
+    required: true
+    allowed: [Dog, Cat, Horse, Livestock, Bird, Small Animal]
+  - key: size
+    type: single_line_text_field
+    required: true
+    unit_note: "Normalize to oz, lb, ml or count, e.g. '16 oz', '30 lb', '60 count'"
+  - key: weight_lb
+    type: number_decimal
+    required: false
+  - key: hazmat
+    type: boolean
+    required: true
+  - key: rx_required
+    type: boolean
+    required: true
+
+by_type:
+  flea-tick/sprays:
+    - key: active_ingredients
+      type: list.single_line_text_field
+      required: true
+    - key: protection_duration
+      type: single_line_text_field
+      required: false
+    - key: epa_registration
+      type: single_line_text_field
+      required: false
+    - key: form
+      type: single_line_text_field
+      required: true
+      allowed: [Pump Spray, Aerosol]
+  dewormers:
+    - key: active_ingredients
+      type: list.single_line_text_field
+      required: true
+    - key: worms_treated
+      type: list.single_line_text_field
+      required: true
+    - key: form
+      type: single_line_text_field
+      required: true
+      allowed: [Tablet, Chewable, Liquid, Granules, Paste]
+  supplements/joint:
+    - key: active_ingredients
+      type: list.single_line_text_field
+      required: true
+    - key: form
+      type: single_line_text_field
+      required: true
+      allowed: [Soft Chew, Tablet, Powder, Liquid]
+    - key: count
+      type: number_integer
+      required: false

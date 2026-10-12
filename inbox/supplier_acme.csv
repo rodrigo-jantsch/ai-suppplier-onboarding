@@ -1,0 +1,4 @@
+supplier_sku,upc,item_name,desc,size,cost,msrp
+SAMPLE-001,000000000001,ACME FLEA/TICK SPRAY DOG,kills fleas ticks 30 days pump,16OZ,7.10,14.99
+SAMPLE-002,000000000002,ACME HIP+JOINT CHEWS DOG,glucosamine chondroitin msm soft chew,60CT,11.25,24.99
+SAMPLE-003,000000000003,ACME OATMEAL SHAMPOO,soothing oatmeal dogs cats,17OZ,3.80,8.49
