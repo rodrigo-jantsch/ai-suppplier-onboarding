@@ -1,5 +1,6 @@
 id: HAZ-02
 title: HAZ shipping restriction
+kind: deterministic
 trigger: Product has a hazardous identification in the incoming CSV.
 action: custom.hazardous = true
 reason: Haz have shipping restrictions

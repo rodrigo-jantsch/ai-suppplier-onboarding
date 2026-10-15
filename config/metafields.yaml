@@ -71,6 +71,9 @@ shared:            # apply to every product type
     - namespace: custom
       key: special_feature
       type: list.single_line_text_field
+    - namespace: custom
+      key: sizes
+      type: list.single_line_text_field
 
     # Taxonomy
     - namespace: custom
