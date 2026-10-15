@@ -1,4 +1,7 @@
-# Store product types. Starter set of 8; grow to ~30 in Weekend 1.
+# Shopify Standard Product Taxonomy, Animals & Pet Supplies branch.
+# Strict: only categories Shopify offers. Parent levels are listed too, so a
+# product can be classified at a more general level when no subcategory fits
+# (see rules/TAX-01.md).
 # Descriptions and keywords are what gets embedded for retrieval,
 # so write them the way a supplier might describe the product.
 
@@ -11,994 +14,1151 @@ types:
 
   # ── Bird Supplies ────────────────────────────────────────────
   - id: bird/cage-accessories
-    name: "Animals & Pet Supplies >  Pet Supplies > Bird Supplies > Bird Cage Accessories"
+    name: "Animals & Pet Supplies > Pet Supplies > Bird Supplies > Bird Cage Accessories"
     description: Add-ons for bird cages such as covers, seed guards, cups and liners.
     keywords: [cage cover, seed guard, cage cup, cage liner, bird cage accessory]
   - id: bird/cages-stands
-    name: "Animals & Pet Supplies >  Pet Supplies > Bird Supplies > Bird Cages & Stands"
+    name: "Animals & Pet Supplies > Pet Supplies > Bird Supplies > Bird Cages & Stands"
     description: Cages, flight cages and stands for housing pet birds.
     keywords: [bird cage, flight cage, parrot cage, cage stand, aviary]
   - id: bird/food
-    name: "Animals & Pet Supplies >  Pet Supplies > Bird Supplies > Bird Food"
+    name: "Animals & Pet Supplies > Pet Supplies > Bird Supplies > Bird Food"
     description: Seed mixes, pellets and formulated diets for pet birds.
     keywords: [bird seed, bird pellets, parrot food, finch food, cockatiel food]
   - id: bird/gyms-playstands
-    name: "Animals & Pet Supplies >  Pet Supplies > Animals & Pet Supplies > Bird Supplies > Bird Gyms & Playstands"
+    name: "Animals & Pet Supplies > Pet Supplies > Bird Supplies > Bird Gyms & Playstands"
     description: Freestanding or cage-top play areas where birds climb and exercise.
     keywords: [bird gym, play stand, playtop, perch tree]
   - id: bird/ladders-perches
-    name: "Animals & Pet Supplies >  Pet Supplies > Bird Supplies > Bird Ladders & Perches"
+    name: "Animals & Pet Supplies > Pet Supplies > Bird Supplies > Bird Ladders & Perches"
     description: Perches, ladders and swings that birds stand and climb on.
     keywords: [perch, bird ladder, rope perch, bird swing, natural wood perch]
   - id: bird/toys
-    name: "Animals & Pet Supplies >  Pet Supplies > Bird Supplies > Bird Toys"
+    name: "Animals & Pet Supplies > Pet Supplies > Bird Supplies > Bird Toys"
     description: Chew, foraging and enrichment toys for pet birds.
     keywords: [bird toy, foraging toy, shreddable, bell toy, parrot toy]
   - id: bird/treats
-    name: "Animals & Pet Supplies >  Pet Supplies > Bird Supplies > Bird Treats"
+    name: "Animals & Pet Supplies > Pet Supplies > Bird Supplies > Bird Treats"
     description: Treats and occasional snacks for birds.
     keywords: [millet spray, treat stick, honey stick, bird treat]
 
   # ── Cat Supplies ─────────────────────────────────────────────
   - id: cat/food
-    name: "Animals & Pet Supplies >  Pet Supplies > Cat Supplies > Cat Food"
-    description: Wet, canned, raw, freeze-dried and other cat food that is not dry kibble.
-    keywords: [wet cat food, canned cat food, pate, pouch, raw cat food, freeze dried]
-  - id: food/dry-cat # custom subtype of Cat Supplies > Cat Food
-    name: "Animals & Pet Supplies >  Pet Supplies > Cat Supplies > Cat Food > Dry Cat Food"
-    description: Kibble for cats, sold by bag weight.
-    keywords: [kibble, dry food, cat food, indoor formula]
+    name: "Animals & Pet Supplies > Pet Supplies > Cat Supplies > Cat Food"
+    description: All cat food, including dry kibble, wet and canned food, raw and freeze-dried food.
+    keywords: [dry cat food, kibble, wet cat food, canned cat food, pate, pouch, raw cat food, freeze dried, indoor formula]
   - id: cat/furniture
-    name: "Animals & Pet Supplies >  Pet Supplies > Cat Supplies > Cat Furniture"
+    name: "Animals & Pet Supplies > Pet Supplies > Cat Supplies > Cat Furniture"
     description: Cat trees, condos, scratching posts and wall shelves.
     keywords: [cat tree, cat condo, scratching post, scratcher, cat shelf]
   - id: cat/furniture-accessories
-    name: "Animals & Pet Supplies >  Pet Supplies > Cat Supplies > Cat Furniture Accessories"
+    name: "Animals & Pet Supplies > Pet Supplies > Cat Supplies > Cat Furniture Accessories"
     description: Replacement parts for cat furniture such as sisal rope, scratch pad refills and perches.
     keywords: [sisal rope, replacement scratcher, scratch pad refill, cat tree parts]
   - id: cat/litter
-    name: "Animals & Pet Supplies >  Pet Supplies > Cat Supplies > Cat Litter"
+    name: "Animals & Pet Supplies > Pet Supplies > Cat Supplies > Cat Litter"
     description: Litter for cat boxes, including clay, silica, pine and plant-based formulas.
     keywords: [cat litter, clumping, clay litter, crystal litter, pine litter]
   - id: cat/toys
-    name: "Animals & Pet Supplies >  Pet Supplies > Cat Supplies > Cat Toys"
+    name: "Animals & Pet Supplies > Pet Supplies > Cat Supplies > Cat Toys"
     description: Toys for cats such as wands, balls, catnip toys and lasers.
     keywords: [cat toy, wand toy, catnip, laser pointer, teaser]
   - id: cat/treats
-    name: "Animals & Pet Supplies >  Pet Supplies > Cat Supplies > Cat Treats"
+    name: "Animals & Pet Supplies > Pet Supplies > Cat Supplies > Cat Treats"
     description: Snacks and rewards for cats.
     keywords: [cat treat, lickable treat, freeze dried treat, crunchy treat]
 
   # ── Dog Supplies ─────────────────────────────────────────────
   - id: dog/diaper-pads-liners
-    name: "Animals & Pet Supplies >  Pet Supplies > Dog Supplies > Dog Diaper Pads & Liners"
+    name: "Animals & Pet Supplies > Pet Supplies > Dog Supplies > Dog Diaper Pads & Liners"
     description: Absorbent inserts and liners used inside dog diapers.
     keywords: [diaper liner, diaper pad, booster pad]
   - id: dog/diapers
-    name: "Animals & Pet Supplies >  Pet Supplies > Dog Supplies > Dog Diapers"
+    name: "Animals & Pet Supplies > Pet Supplies > Dog Supplies > Dog Diapers"
     description: Disposable or washable diapers and belly bands for dogs.
     keywords: [dog diaper, belly band, male wrap, female diaper, heat diaper]
   - id: dog/food
-    name: "Animals & Pet Supplies >  Pet Supplies > Dog Supplies > Dog Food"
-    description: Wet, canned, raw, freeze-dried and other dog food that is not dry kibble.
-    keywords: [wet dog food, canned dog food, raw dog food, freeze dried, food topper]
-  - id: food/dry-dog # custom subtype of Dog Supplies > Dog Food
-    name: "Animals & Pet Supplies >  Pet Supplies > Dog Supplies > Dog Food > Dry Dog Food"
-    description: Kibble for dogs, sold by bag weight.
-    keywords: [kibble, dry food, dog food, lb bag, grain free]
+    name: "Animals & Pet Supplies > Pet Supplies > Dog Supplies > Dog Food"
+    description: All dog food, including dry kibble, wet and canned food, raw and freeze-dried food and food toppers.
+    keywords: [dry dog food, kibble, lb bag, grain free, wet dog food, canned dog food, raw dog food, freeze dried, food topper]
   - id: dog/houses
-    name: "Animals & Pet Supplies >  Pet Supplies > Dog Supplies > Dog Houses"
+    name: "Animals & Pet Supplies > Pet Supplies > Dog Supplies > Dog Houses"
     description: Outdoor shelters and houses for dogs.
     keywords: [dog house, outdoor shelter, insulated dog house]
   - id: dog/kennel-run-accessories
-    name: "Animals & Pet Supplies >  Pet Supplies > Dog Supplies > Dog Kennel & Run Accessories"
+    name: "Animals & Pet Supplies > Pet Supplies > Dog Supplies > Dog Kennel & Run Accessories"
     description: Covers, roofs, shade cloths and flooring for dog kennels and runs.
     keywords: [kennel cover, run cover, kennel roof, shade cloth, kennel floor]
   - id: dog/kennels-runs
-    name: "Animals & Pet Supplies >  Pet Supplies > Dog Supplies > Dog Kennels & Runs"
+    name: "Animals & Pet Supplies > Pet Supplies > Dog Supplies > Dog Kennels & Runs"
     description: Outdoor kennels and dog runs, usually chain link or welded panels.
     keywords: [outdoor kennel, dog run, chain link kennel, welded kennel]
   - id: dog/toys
-    name: "Animals & Pet Supplies >  Pet Supplies > Dog Supplies > Dog Toys"
+    name: "Animals & Pet Supplies > Pet Supplies > Dog Supplies > Dog Toys"
     description: Chew, plush, fetch and tug toys for dogs.
     keywords: [dog toy, chew toy, squeaky toy, plush, tug toy, fetch ball]
   - id: dog/treadmills
-    name: "Animals & Pet Supplies >  Pet Supplies > Dog Supplies > Dog Treadmills"
+    name: "Animals & Pet Supplies > Pet Supplies > Dog Supplies > Dog Treadmills"
     description: Treadmills and slatmills for exercising dogs indoors.
     keywords: [dog treadmill, slatmill, dog exercise]
   - id: dog/treats
-    name: "Animals & Pet Supplies >  Pet Supplies > Dog Supplies > Dog Treats"
+    name: "Animals & Pet Supplies > Pet Supplies > Dog Supplies > Dog Treats"
     description: Snacks, chews and training rewards for dogs (dental chews go under Oral Care).
     keywords: [dog treat, jerky, biscuit, bully stick, training treat]
 
   # ── Fish & Aquatic Supplies ──────────────────────────────────
   - id: fish/tubing
-    name: "Animals & Pet Supplies >  Pet Supplies > Fish & Aquatic Supplies > Aquarium & Pond Tubings"
+    name: "Animals & Pet Supplies > Pet Supplies > Fish & Aquatic Supplies > Aquarium & Pond Tubings"
     description: Airline and water tubing for aquariums and ponds.
     keywords: [airline tubing, aquarium hose, pond tubing]
   - id: fish/air-stones
-    name: "Animals & Pet Supplies >  Pet Supplies > Fish & Aquatic Supplies > Aquarium Air Stones & Diffusers"
+    name: "Animals & Pet Supplies > Pet Supplies > Fish & Aquatic Supplies > Aquarium Air Stones & Diffusers"
     description: Air stones and diffusers that aerate aquarium water.
     keywords: [air stone, airstone, bubbler, diffuser]
   - id: fish/cleaning
-    name: "Animals & Pet Supplies >  Pet Supplies > Fish & Aquatic Supplies > Aquarium Cleaning Supplies"
+    name: "Animals & Pet Supplies > Pet Supplies > Fish & Aquatic Supplies > Aquarium Cleaning Supplies"
     description: Gravel vacuums, siphons, algae scrapers and glass cleaners.
     keywords: [gravel vacuum, siphon, algae scraper, magnet cleaner]
   - id: fish/decor
-    name: "Animals & Pet Supplies >  Pet Supplies > Fish & Aquatic Supplies > Aquarium Decors"
+    name: "Animals & Pet Supplies > Pet Supplies > Fish & Aquatic Supplies > Aquarium Decors"
     description: Ornaments, driftwood, rocks, artificial plants and backgrounds for tanks.
     keywords: [aquarium ornament, driftwood, artificial plant, tank background]
   - id: fish/filters
-    name: "Animals & Pet Supplies >  Pet Supplies > Fish & Aquatic Supplies > Aquarium Filters"
+    name: "Animals & Pet Supplies > Pet Supplies > Fish & Aquatic Supplies > Aquarium Filters"
     description: Aquarium filters and filter media.
     keywords: [aquarium filter, canister filter, hang on back, sponge filter, filter media]
   - id: fish/nets
-    name: "Animals & Pet Supplies >  Pet Supplies > Fish & Aquatic Supplies > Aquarium Fish Nets"
+    name: "Animals & Pet Supplies > Pet Supplies > Fish & Aquatic Supplies > Aquarium Fish Nets"
     description: Nets for catching and moving fish.
     keywords: [fish net, aquarium net]
   - id: fish/gravel-substrates
-    name: "Animals & Pet Supplies >  Pet Supplies > Fish & Aquatic Supplies > Aquarium Gravel & Substrates"
+    name: "Animals & Pet Supplies > Pet Supplies > Fish & Aquatic Supplies > Aquarium Gravel & Substrates"
     description: Gravel, sand and planted-tank substrates.
     keywords: [aquarium gravel, aquarium sand, substrate, aquasoil]
   - id: fish/lighting
-    name: "Animals & Pet Supplies >  Pet Supplies > Fish & Aquatic Supplies > Aquarium Lighting"
+    name: "Animals & Pet Supplies > Pet Supplies > Fish & Aquatic Supplies > Aquarium Lighting"
     description: Lights and hoods for aquariums.
     keywords: [aquarium light, led light, tank hood]
   - id: fish/overflow-boxes
-    name: "Animals & Pet Supplies >  Pet Supplies > Fish & Aquatic Supplies > Aquarium Overflow Boxes"
+    name: "Animals & Pet Supplies > Pet Supplies > Fish & Aquatic Supplies > Aquarium Overflow Boxes"
     description: Overflow boxes that move water from the tank to a sump.
     keywords: [overflow box, sump overflow]
   - id: fish/stands
-    name: "Animals & Pet Supplies >  Pet Supplies > Fish & Aquatic Supplies > Aquarium Stands"
+    name: "Animals & Pet Supplies > Pet Supplies > Fish & Aquatic Supplies > Aquarium Stands"
     description: Stands and cabinets that support aquariums.
     keywords: [aquarium stand, tank stand, aquarium cabinet]
   - id: fish/temperature-controllers
-    name: "Animals & Pet Supplies >  Pet Supplies > Fish & Aquatic Supplies > Aquarium Temperature Controllers"
+    name: "Animals & Pet Supplies > Pet Supplies > Fish & Aquatic Supplies > Aquarium Temperature Controllers"
     description: Heaters, chillers and temperature controllers for aquariums.
     keywords: [aquarium heater, chiller, temperature controller, aquarium thermometer]
   - id: fish/water-treatments
-    name: "Animals & Pet Supplies >  Pet Supplies > Fish & Aquatic Supplies > Aquarium Water Treatments"
+    name: "Animals & Pet Supplies > Pet Supplies > Fish & Aquatic Supplies > Aquarium Water Treatments"
     description: Water conditioners, beneficial bacteria and water chemistry treatments.
     keywords: [water conditioner, dechlorinator, beneficial bacteria, ph adjuster]
   - id: fish/aquariums
-    name: "Animals & Pet Supplies >  Pet Supplies > Fish & Aquatic Supplies > Aquariums"
+    name: "Animals & Pet Supplies > Pet Supplies > Fish & Aquatic Supplies > Aquariums"
     description: Fish tanks and aquarium kits.
     keywords: [aquarium, fish tank, tank kit, gallon tank]
   - id: fish/plant-fertilizers
-    name: "Animals & Pet Supplies >  Pet Supplies > Fish & Aquatic Supplies > Aquatic Plant Fertilizers"
+    name: "Animals & Pet Supplies > Pet Supplies > Fish & Aquatic Supplies > Aquatic Plant Fertilizers"
     description: Fertilizers and supplements for live aquarium plants.
     keywords: [plant fertilizer, root tabs, liquid fertilizer, co2]
   - id: fish/feeders
-    name: "Animals & Pet Supplies >  Pet Supplies > Fish & Aquatic Supplies > Fish Feeders"
+    name: "Animals & Pet Supplies > Pet Supplies > Fish & Aquatic Supplies > Fish Feeders"
     description: Automatic feeders and feeding rings for fish.
     keywords: [automatic fish feeder, feeding ring, vacation feeder]
   - id: fish/food
-    name: "Animals & Pet Supplies >  Pet Supplies > Fish & Aquatic Supplies > Fish Food"
+    name: "Animals & Pet Supplies > Pet Supplies > Fish & Aquatic Supplies > Fish Food"
     description: Flakes, pellets, frozen and freeze-dried foods for fish.
     keywords: [fish food, flakes, pellets, koi food, frozen fish food]
 
   # ── Pet Agility Equipment ────────────────────────────────────
   - id: agility/a-frames
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Agility Equipment > A-Frames"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Agility Equipment > A-Frames"
     description: A-frame climbing obstacles for agility training.
     keywords: [a-frame, agility climb]
   - id: agility/tunnels
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Agility Equipment > Agility Tunnels"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Agility Equipment > Agility Tunnels"
     description: Open and chute tunnels for agility courses.
     keywords: [agility tunnel, dog tunnel, chute]
   - id: agility/dog-walks-ramps
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Agility Equipment > Dog Walks & Ramps"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Agility Equipment > Dog Walks & Ramps"
     description: Elevated walks and ramps used in agility courses.
     keywords: [dog walk, agility ramp, balance walk]
   - id: agility/jump-bars
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Agility Equipment > Jump Bars"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Agility Equipment > Jump Bars"
     description: Adjustable bar jumps for agility training.
     keywords: [jump bar, agility jump, hurdle]
   - id: agility/pause-tables
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Agility Equipment > Pause Tables"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Agility Equipment > Pause Tables"
     description: Platforms where dogs pause during agility runs.
     keywords: [pause table, agility table]
   - id: agility/poles
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Agility Equipment > Poles"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Agility Equipment > Poles"
     description: Weave poles and related agility poles.
     keywords: [weave poles, agility poles]
   - id: agility/teeter-boards
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Agility Equipment > Teeter Boards"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Agility Equipment > Teeter Boards"
     description: Seesaw obstacles for agility training.
     keywords: [teeter, seesaw, teeter board]
   - id: agility/tire-jumps
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Agility Equipment > Tire Jumps"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Agility Equipment > Tire Jumps"
     description: Tire or hoop jumps for agility courses.
     keywords: [tire jump, hoop jump]
 
   # ── Pet Apparel ──────────────────────────────────────────────
   - id: apparel/bandanas
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Apparel > Pet Bandanas"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Apparel > Pet Bandanas"
     description: Bandanas worn around a pet's neck.
     keywords: [pet bandana, dog bandana]
   - id: apparel/bows-ribbons
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Apparel > Pet Bows & Ribbons"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Apparel > Pet Bows & Ribbons"
     description: Decorative bows and ribbons for pets.
     keywords: [pet bow, hair bow, ribbon]
   - id: apparel/coats
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Apparel > Pet Coats"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Apparel > Pet Coats"
     description: Warm full-body coats for cold weather.
     keywords: [dog coat, winter coat, parka]
   - id: apparel/collars-ties
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Apparel > Pet Collars & Ties"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Apparel > Pet Collars & Ties"
     description: Decorative collars, bow ties and neckties worn as apparel rather than for walking.
     keywords: [bow tie, pet necktie, decorative collar]
   - id: apparel/costumes
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Apparel > Pet Costumes"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Apparel > Pet Costumes"
     description: Costumes for Halloween and dress-up.
     keywords: [pet costume, halloween costume, dog costume]
   - id: apparel/dresses
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Apparel > Pet Dresses"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Apparel > Pet Dresses"
     description: Dresses for pets.
     keywords: [dog dress, pet dress, tutu]
   - id: apparel/hats
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Apparel > Pet Hats"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Apparel > Pet Hats"
     description: Hats and caps for pets.
     keywords: [dog hat, pet hat, sun hat]
   - id: apparel/hoodies
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Apparel > Pet Hoodies"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Apparel > Pet Hoodies"
     description: Hooded sweatshirts for pets.
     keywords: [dog hoodie, pet hoodie]
   - id: apparel/jackets
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Apparel > Pet Jackets"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Apparel > Pet Jackets"
     description: Lighter jackets, vests and outer layers for pets.
     keywords: [dog jacket, pet vest, fleece jacket]
   - id: apparel/rain-coats
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Apparel > Pet Rain Coats"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Apparel > Pet Rain Coats"
     description: Waterproof raincoats and slickers.
     keywords: [raincoat, dog raincoat, waterproof]
   - id: apparel/safety-vests
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Apparel > Pet Safety Vests"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Apparel > Pet Safety Vests"
     description: High-visibility and life vests for pets.
     keywords: [life jacket, life vest, reflective vest, hi vis]
   - id: apparel/scarves
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Apparel > Pet Scarves"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Apparel > Pet Scarves"
     description: Scarves for pets.
     keywords: [pet scarf, dog scarf]
   - id: apparel/shirts
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Apparel > Pet Shirts"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Apparel > Pet Shirts"
     description: T-shirts, polos and other shirts for pets.
     keywords: [dog shirt, pet t-shirt, polo]
   - id: apparel/shoes
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Apparel > Pet Shoes"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Apparel > Pet Shoes"
     description: Boots and booties that protect paws.
     keywords: [dog boots, booties, paw protector]
   - id: apparel/socks
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Apparel > Pet Socks"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Apparel > Pet Socks"
     description: Grip and indoor socks for pets.
     keywords: [dog socks, grip socks, non slip socks]
   - id: apparel/sunglasses
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Apparel > Pet Sunglasses"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Apparel > Pet Sunglasses"
     description: Sunglasses and protective goggles for pets.
     keywords: [dog goggles, pet sunglasses, doggles]
   - id: apparel/sweaters
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Apparel > Pet Sweaters"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Apparel > Pet Sweaters"
     description: Knit sweaters for pets.
     keywords: [dog sweater, knit sweater, cat sweater]
   - id: apparel-hangers
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Apparel Hangers"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Apparel Hangers"
     description: Small hangers sized for pet clothing.
     keywords: [pet clothes hanger, dog clothes hanger]
 
   # ── Pet Beds ─────────────────────────────────────────────────
   - id: bed-accessories
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Bed Accessories"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Bed Accessories"
     description: Replacement covers, liners and inserts for pet beds.
     keywords: [bed cover, replacement cover, bed liner, bed insert]
   - id: beds/baskets
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Beds > Baskets"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Beds > Baskets"
     description: Woven or wicker basket-style pet beds.
     keywords: [basket bed, wicker bed]
   - id: beds/bolster
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Beds > Bolster Beds"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Beds > Bolster Beds"
     description: Beds with raised bolster edges for resting heads.
     keywords: [bolster bed, sofa bed, couch bed]
   - id: beds/caves
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Beds > Caves"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Beds > Caves"
     description: Covered or hooded beds pets can burrow into.
     keywords: [cave bed, burrow bed, hooded bed]
   - id: beds/cooling
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Beds > Cooling Beds"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Beds > Cooling Beds"
     description: Gel or breathable mats and beds that keep pets cool.
     keywords: [cooling bed, cooling mat, gel mat]
   - id: beds/donuts
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Beds > Donuts"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Beds > Donuts"
     description: Round donut and calming beds.
     keywords: [donut bed, calming bed, round bed]
   - id: beds/hammocks
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Beds > Hammocks"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Beds > Hammocks"
     description: Suspended hammock beds, including window and cage hammocks.
     keywords: [pet hammock, window perch, cage hammock]
   - id: beds/nests
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Beds > Nests"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Beds > Nests"
     description: Soft, nest-shaped beds.
     keywords: [nest bed]
   - id: beds/orthopedic
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Beds > Orthopedic Beds"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Beds > Orthopedic Beds"
     description: Memory foam and supportive beds for joint comfort.
     keywords: [orthopedic bed, memory foam, senior dog bed]
   - id: beds/chairs
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Beds > Pet Chairs"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Beds > Pet Chairs"
     description: Chair- or sofa-style pet furniture.
     keywords: [pet chair, pet sofa]
   - id: beds/cots
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Beds > Pet Cots"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Beds > Pet Cots"
     description: Raised, elevated cot beds.
     keywords: [elevated bed, raised bed, cot]
   - id: beds/pillow
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Beds > Pillow Beds"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Beds > Pillow Beds"
     description: Flat cushion and pillow-style beds.
     keywords: [pillow bed, cushion bed, mattress bed]
   - id: beds/radiator
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Beds > Radiator Beds"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Beds > Radiator Beds"
     description: Beds that hang on radiators.
     keywords: [radiator bed, radiator hammock]
   - id: beds/towers
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Beds > Towers"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Beds > Towers"
     description: Multi-level tower beds.
     keywords: [tower bed]
 
   # ── Pet Bells & Charms ───────────────────────────────────────
   - id: bells-charms/collar-bells
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Bells & Charms > Collar Bells"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Bells & Charms > Collar Bells"
     description: Bells that attach to a collar.
     keywords: [collar bell, cat bell]
   - id: bells-charms/collar-charms
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Bells & Charms > Collar Charms"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Bells & Charms > Collar Charms"
     description: Decorative charms that hang on a collar.
     keywords: [collar charm, pet charm]
   - id: bells-charms/id-tag-charms
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Bells & Charms > ID Tag Charms"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Bells & Charms > ID Tag Charms"
     description: Charms that pair with or decorate ID tags.
     keywords: [tag charm, id charm]
 
   # ── Pet Biometric Monitors ───────────────────────────────────
   - id: biometric/glucose-meters
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Biometric Monitors > Pet Glucose Meters"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Biometric Monitors > Pet Glucose Meters"
     description: Glucose meters calibrated for pets.
     keywords: [pet glucose meter, diabetic pet, blood glucose]
   - id: biometric/pedometers
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Biometric Monitors > Pet Pedometers"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Biometric Monitors > Pet Pedometers"
     description: Activity trackers and pedometers for pets.
     keywords: [activity tracker, pet pedometer, fitness tracker]
   - id: biometric/thermometers
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Biometric Monitors > Pet Thermometers"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Biometric Monitors > Pet Thermometers"
     description: Thermometers for taking a pet's temperature.
     keywords: [pet thermometer, rectal thermometer, ear thermometer]
 
   # ── Bowls, Feeders & Waterers ────────────────────────────────
   - id: bowl-mats
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Bowl Mats"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Bowl Mats"
     description: Mats that sit under food and water bowls.
     keywords: [bowl mat, feeding mat, placemat]
   - id: bowl-stands
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Bowl Stands"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Bowl Stands"
     description: Stands that hold separate bowls.
     keywords: [bowl stand, bowl holder]
   - id: bowls-feeders/automatic-feeders
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Bowls, Feeders & Waterers > Automatic Feeders"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Bowls, Feeders & Waterers > Automatic Feeders"
     description: Timed or app-controlled feeders.
     keywords: [automatic feeder, timed feeder, smart feeder]
   - id: bowls-feeders/bowls
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Bowls, Feeders & Waterers > Bowls"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Bowls, Feeders & Waterers > Bowls"
     description: Standard food and water bowls.
     keywords: [dog bowl, cat bowl, stainless bowl, ceramic bowl]
   - id: bowls-feeders/elevated-bowls
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Bowls, Feeders & Waterers > Elevated Bowls"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Bowls, Feeders & Waterers > Elevated Bowls"
     description: Raised bowls and feeders.
     keywords: [elevated bowl, raised feeder]
   - id: bowls-feeders/gravity-feeders
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Bowls, Feeders & Waterers > Gravity Feeders"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Bowls, Feeders & Waterers > Gravity Feeders"
     description: Gravity-fed food hoppers.
     keywords: [gravity feeder, food hopper]
   - id: bowls-feeders/slow-feeder-bowls
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Bowls, Feeders & Waterers > Slow Feeder Bowls"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Bowls, Feeders & Waterers > Slow Feeder Bowls"
     description: Puzzle and maze bowls that slow eating.
     keywords: [slow feeder, puzzle bowl, maze bowl]
   - id: bowls-feeders/travel-bowls
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Bowls, Feeders & Waterers > Travel Bowls"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Bowls, Feeders & Waterers > Travel Bowls"
     description: Collapsible and portable bowls.
     keywords: [collapsible bowl, travel bowl, portable bowl]
   - id: bowls-feeders/water-dispensers
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Bowls, Feeders & Waterers > Water Dispensers"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Bowls, Feeders & Waterers > Water Dispensers"
     description: Gravity waterers and portable water bottles.
     keywords: [gravity waterer, water dispenser, travel water bottle]
   - id: bowls-feeders/water-fountains
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Bowls, Feeders & Waterers > Water Fountains"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Bowls, Feeders & Waterers > Water Fountains"
     description: Electric recirculating fountains and their filters.
     keywords: [pet fountain, cat fountain, fountain filter]
 
   # ── Carriers & Crates ────────────────────────────────────────
   - id: carrier-crate-accessories
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Carrier & Crate Accessories"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Carrier & Crate Accessories"
     description: Crate pads, covers, dividers and carrier add-ons.
     keywords: [crate pad, crate cover, crate divider, crate mat]
   - id: carriers-crates/air-travel
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Carriers & Crates > Air Travel Approved Carriers"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Carriers & Crates > Air Travel Approved Carriers"
     description: Airline-approved carriers for in-cabin or cargo travel.
     keywords: [airline approved, in cabin carrier, iata crate]
   - id: carriers-crates/backpack
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Carriers & Crates > Backpack Carriers"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Carriers & Crates > Backpack Carriers"
     description: Backpack-style pet carriers.
     keywords: [backpack carrier, bubble backpack]
   - id: carriers-crates/car-crates
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Carriers & Crates > Car Crates"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Carriers & Crates > Car Crates"
     description: Crates designed for vehicle travel.
     keywords: [car crate, travel crate, vehicle crate]
   - id: carriers-crates/furniture-style
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Carriers & Crates > Furniture-Style Crates"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Carriers & Crates > Furniture-Style Crates"
     description: Crates designed to double as furniture, such as end tables.
     keywords: [furniture crate, end table crate, wooden crate]
   - id: carriers-crates/hard-sided
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Carriers & Crates > Hard-Sided Carriers"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Carriers & Crates > Hard-Sided Carriers"
     description: Plastic and hard-shell carriers.
     keywords: [hard carrier, plastic carrier, kennel carrier]
   - id: carriers-crates/rolling
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Carriers & Crates > Rolling Carriers"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Carriers & Crates > Rolling Carriers"
     description: Carriers with wheels and a telescoping handle.
     keywords: [rolling carrier, trolley carrier]
   - id: carriers-crates/slings
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Carriers & Crates > Slings & Wearable Carriers"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Carriers & Crates > Slings & Wearable Carriers"
     description: Slings and front carriers worn on the body.
     keywords: [pet sling, front carrier, wearable carrier]
   - id: carriers-crates/soft-sided-carriers
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Carriers & Crates > Soft-Sided Carriers"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Carriers & Crates > Soft-Sided Carriers"
     description: Fabric and mesh carriers.
     keywords: [soft carrier, fabric carrier, mesh carrier]
   - id: carriers-crates/soft-sided-crates
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Carriers & Crates > Soft-Sided Crates"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Carriers & Crates > Soft-Sided Crates"
     description: Collapsible fabric crates.
     keywords: [soft crate, collapsible crate, fabric crate]
   - id: carriers-crates/wheeled
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Carriers & Crates > Wheeled Carriers"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Carriers & Crates > Wheeled Carriers"
     description: Larger carriers and crates mounted on wheels.
     keywords: [wheeled carrier, wheeled crate]
 
   # ── Collars & Harnesses ──────────────────────────────────────
   - id: collars-harnesses/breakaway
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Collars & Harnesses > Breakaway & Safety Collars"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Collars & Harnesses > Breakaway & Safety Collars"
     description: Collars that release under pressure.
     keywords: [breakaway collar, safety collar, cat collar]
   - id: collars-harnesses/flea-collars
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Collars & Harnesses > Flea Collars"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Collars & Harnesses > Flea Collars"
     description: Everyday wear collars marketed as flea collars (see also Flea & Tick Control > Flea & Tick Collars).
     keywords: [flea collar]
   - id: collars-harnesses/gps
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Collars & Harnesses > GPS Collars"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Collars & Harnesses > GPS Collars"
     description: Collars with GPS tracking built in.
     keywords: [gps collar, tracking collar, smart collar]
   - id: collars-harnesses/harnesses
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Collars & Harnesses > Harnesses"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Collars & Harnesses > Harnesses"
     description: Step-in, overhead and no-pull harnesses.
     keywords: [harness, no pull harness, step in harness]
   - id: collars-harnesses/led
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Collars & Harnesses > LED Collars"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Collars & Harnesses > LED Collars"
     description: Light-up collars for night visibility.
     keywords: [led collar, light up collar, glow collar]
   - id: collars-harnesses/martingale
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Collars & Harnesses > Martingale Collars"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Collars & Harnesses > Martingale Collars"
     description: Limited-slip martingale collars.
     keywords: [martingale, limited slip collar]
   - id: collars-harnesses/personalized-id
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Collars & Harnesses > Personalized ID Collars"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Collars & Harnesses > Personalized ID Collars"
     description: Collars embroidered or engraved with a name or phone number.
     keywords: [personalized collar, embroidered collar, engraved collar]
   - id: collars-harnesses/standard
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Collars & Harnesses > Standard Collars"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Collars & Harnesses > Standard Collars"
     description: Everyday buckle or clip collars.
     keywords: [dog collar, buckle collar, nylon collar, leather collar]
   - id: collars-harnesses/training
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Collars & Harnesses > Training, Choke & Pinch Collars"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Collars & Harnesses > Training, Choke & Pinch Collars"
     description: Training, choke, prong and e-collars.
     keywords: [training collar, choke chain, prong collar, e-collar]
   - id: collars-harnesses/vests
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Collars & Harnesses > Vests"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Collars & Harnesses > Vests"
     description: Vest-style harnesses, including service dog vests.
     keywords: [vest harness, service dog vest]
 
   # ── Pet Containment Systems ──────────────────────────────────
   - id: containment/invisible-fences
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Containment Systems > Electronic Invisible Fences"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Containment Systems > Electronic Invisible Fences"
     description: In-ground and wireless electronic fences.
     keywords: [invisible fence, wireless fence, underground fence]
   - id: containment/enclosures-cages
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Containment Systems > Enclosures & Cages"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Containment Systems > Enclosures & Cages"
     description: General pet enclosures and cages.
     keywords: [pet enclosure, pet cage]
   - id: containment/exercise-pens
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Containment Systems > Exercise Pens"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Containment Systems > Exercise Pens"
     description: Folding panel pens.
     keywords: [exercise pen, x-pen, puppy pen]
   - id: containment/fences-gates
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Containment Systems > Fences & Gates"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Containment Systems > Fences & Gates"
     description: Indoor pet gates and fencing.
     keywords: [pet gate, dog gate, pet fence]
   - id: containment/kennels
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Containment Systems > Kennels"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Containment Systems > Kennels"
     description: Indoor kennels and wire crates.
     keywords: [wire crate, indoor kennel, dog crate]
   - id: containment/playpens
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Containment Systems > Playpens"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Containment Systems > Playpens"
     description: Fabric and portable playpens.
     keywords: [playpen, pop up pen, portable pen]
 
   # ── Pet Doors ────────────────────────────────────────────────
   - id: door-accessories
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Door Accessories"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Door Accessories"
     description: Replacement flaps, key collars and installation parts.
     keywords: [replacement flap, door collar key, door tunnel]
   - id: doors/door-mounted
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Doors > Door-Mounted Doors"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Doors > Door-Mounted Doors"
     description: Pet doors installed into a standard door.
     keywords: [dog door, cat flap, door mount]
   - id: doors/electronic
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Doors > Electronic Automatic Doors"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Doors > Electronic Automatic Doors"
     description: Microchip or smart-tag pet doors.
     keywords: [microchip door, smart pet door, electronic door]
   - id: doors/sliding-glass
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Doors > Sliding Glass Doors"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Doors > Sliding Glass Doors"
     description: Panel inserts for sliding glass doors.
     keywords: [patio panel, sliding door insert]
   - id: doors/wall-mounted
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Doors > Wall-Mounted Doors"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Doors > Wall-Mounted Doors"
     description: Pet doors installed through a wall.
     keywords: [wall door, wall mount pet door]
   - id: doors/window-mounted
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Doors > Window-Mounted Doors"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Doors > Window-Mounted Doors"
     description: Pet doors installed in a window or sash.
     keywords: [window pet door, sash insert]
 
   # ── Eye Drops & Lubricants ───────────────────────────────────
   - id: eye-care/conjunctivitis
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Eye Drops & Lubricants > Conjunctivitis Treatments"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Eye Drops & Lubricants > Conjunctivitis Treatments"
     description: Treatments for pink eye and eye infections.
     keywords: [conjunctivitis, pink eye, eye infection]
   - id: eye-care/cleaners
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Eye Drops & Lubricants > Eye Cleaners"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Eye Drops & Lubricants > Eye Cleaners"
     description: Eye cleaning solutions and pads.
     keywords: [eye cleaner, eye pads]
   - id: eye-care/irrigation
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Eye Drops & Lubricants > Eye Irrigation Solutions"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Eye Drops & Lubricants > Eye Irrigation Solutions"
     description: Sterile solutions for flushing eyes.
     keywords: [eye irrigation, saline, eye flush]
   - id: eye-care/lubricants
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Eye Drops & Lubricants > Eye Lubricants"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Eye Drops & Lubricants > Eye Lubricants"
     description: Lubricating drops and gels for dry eye.
     keywords: [eye lubricant, dry eye, artificial tears]
   - id: eye-care/washes
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Eye Drops & Lubricants > Eye Washes"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Eye Drops & Lubricants > Eye Washes"
     description: General eye wash rinses.
     keywords: [eye wash, eye rinse]
   - id: eye-care/tear-stain
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Eye Drops & Lubricants > Tear Stain Removers"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Eye Drops & Lubricants > Tear Stain Removers"
     description: Products that remove or reduce tear stains.
     keywords: [tear stain, tear stain remover]
 
   # ── First Aid ────────────────────────────────────────────────
   - id: first-aid/general
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet First Aid & Emergency Kits > General First Aid Kits"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet First Aid & Emergency Kits > General First Aid Kits"
     description: Everyday pet first aid kits.
     keywords: [pet first aid kit]
   - id: first-aid/trauma
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet First Aid & Emergency Kits > Trauma Kits"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet First Aid & Emergency Kits > Trauma Kits"
     description: Kits for serious injuries, often for working or hunting dogs.
     keywords: [trauma kit, k9 trauma, hunting dog kit]
   - id: first-aid/travel
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet First Aid & Emergency Kits > Travel First Aid Kits"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet First Aid & Emergency Kits > Travel First Aid Kits"
     description: Compact kits for travel and hiking.
     keywords: [travel first aid, hiking kit]
 
   # ── Flea & Tick Control ──────────────────────────────────────
   - id: flea-tick/collars
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Flea & Tick Control > Flea & Tick Collars"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Flea & Tick Control > Flea & Tick Collars"
     description: Collars that release flea and tick protection over several months.
     keywords: [collar, 8 month, long lasting, flea collar, tick collar]
   - id: flea-tick/foggers
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Flea & Tick Control > Flea & Tick Foggers"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Flea & Tick Control > Flea & Tick Foggers"
     description: Room foggers and bombs that treat the home for fleas.
     keywords: [fogger, flea bomb, room fogger]
   - id: flea-tick/shampoos
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Flea & Tick Control > Flea & Tick Shampoos"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Flea & Tick Control > Flea & Tick Shampoos"
     description: Shampoos that kill or repel fleas and ticks.
     keywords: [flea shampoo, tick shampoo, flea dip]
   - id: flea-tick/sprays
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Flea & Tick Control > Flea & Tick Sprays"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Flea & Tick Control > Flea & Tick Sprays"
     description: Topical sprays that kill or repel fleas and ticks on pets or in the home.
     keywords: [flea spray, tick spray, pump spray, aerosol, permethrin, pyrethrin]
   - id: flea-tick/combs
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Flea & Tick Control > Flea Combs"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Flea & Tick Control > Flea Combs"
     description: Fine-tooth combs for removing fleas, plus tick removal tools.
     keywords: [flea comb, tick remover, tick twister]
   - id: flea-tick/oral
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Flea & Tick Control > Oral Medication"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Flea & Tick Control > Oral Medication"
     description: Chewables and tablets that kill fleas and ticks.
     keywords: [flea pill, chewable, nitenpyram, oral flea treatment]
   - id: flea-tick/spot-on
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Flea & Tick Control > Spot Treatments"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Flea & Tick Control > Spot Treatments"
     description: Monthly liquid applied to the skin between the shoulder blades.
     keywords: [spot on, topical, monthly, applicator, pipette]
 
   # ── Food Containers & Scoops ─────────────────────────────────
   - id: food-containers/can-covers
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Food Containers > Can Covers"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Food Containers > Can Covers"
     description: Lids that cover opened pet food cans.
     keywords: [can cover, can lid]
   - id: food-containers/bins
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Food Containers > Food Storage Bins"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Food Containers > Food Storage Bins"
     description: Large bins for storing bulk kibble.
     keywords: [food bin, kibble bin]
   - id: food-containers/containers
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Food Containers > Food Storage Containers"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Food Containers > Food Storage Containers"
     description: Airtight containers for food and treats.
     keywords: [airtight container, treat jar, food container]
   - id: food-scoops
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Food Scoops"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Food Scoops"
     description: Scoops and measuring cups for pet food.
     keywords: [food scoop, measuring scoop]
 
   # ── Grooming Supplies ────────────────────────────────────────
   - id: grooming/combs-brushes
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Grooming Supplies > Pet Combs & Brushes"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Grooming Supplies > Pet Combs & Brushes"
     description: Brushes, combs, deshedding tools and rakes.
     keywords: [slicker brush, deshedding tool, comb, undercoat rake]
   - id: grooming/fragrances
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Grooming Supplies > Pet Fragrances & Deodorizing Sprays"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Grooming Supplies > Pet Fragrances & Deodorizing Sprays"
     description: Colognes and deodorizing sprays for pets.
     keywords: [pet cologne, deodorizing spray, pet perfume]
   - id: grooming/clippers
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Grooming Supplies > Pet Hair Clippers & Trimmers"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Grooming Supplies > Pet Hair Clippers & Trimmers"
     description: Electric clippers, trimmers and blades.
     keywords: [clippers, trimmer, clipper blade]
   - id: grooming/dryers
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Grooming Supplies > Pet Hair Dryers"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Grooming Supplies > Pet Hair Dryers"
     description: High-velocity and stand dryers for pets.
     keywords: [pet dryer, blaster, high velocity dryer]
   - id: grooming/nail-polish
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Grooming Supplies > Pet Nail Polish"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Grooming Supplies > Pet Nail Polish"
     description: Pet-safe nail polish.
     keywords: [pet nail polish]
   - id: grooming/nail-tools
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Grooming Supplies > Pet Nail Tools"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Grooming Supplies > Pet Nail Tools"
     description: Nail clippers, grinders and styptic powder.
     keywords: [nail clipper, nail grinder, styptic powder]
   - id: grooming/shampoo
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Grooming Supplies > Pet Shampoo & Conditioner"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Grooming Supplies > Pet Shampoo & Conditioner"
     description: Shampoos and rinses for bathing pets, including medicated and oatmeal formulas (flea and tick shampoos go under Flea & Tick Control).
     keywords: [shampoo, oatmeal, medicated, conditioner, bath]
   - id: grooming/wipes
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Grooming Supplies > Pet Wipes"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Grooming Supplies > Pet Wipes"
     description: Grooming and cleaning wipes for pets.
     keywords: [pet wipes, grooming wipes, paw wipes]
 
   # ── Heating Pads ─────────────────────────────────────────────
   - id: heating-pad-accessories
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Heating Pad Accessories"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Heating Pad Accessories"
     description: Covers and replacement parts for pet heating pads.
     keywords: [heating pad cover]
   - id: heating-pads
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Heating Pads"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Heating Pads"
     description: Electric and self-warming pads for pets.
     keywords: [heating pad, heated mat, self warming]
 
   # ── ID Tags ──────────────────────────────────────────────────
   - id: id-tags/qr
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet ID Tags > Digital QR Code Tags"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet ID Tags > Digital QR Code Tags"
     description: Tags with a scannable QR code linked to an online profile.
     keywords: [qr tag, smart tag, digital id]
   - id: id-tags/embroidered
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet ID Tags > Embroidered Tags"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet ID Tags > Embroidered Tags"
     description: Fabric tags with embroidered details.
     keywords: [embroidered tag, fabric tag]
   - id: id-tags/medical-alert
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet ID Tags > Medical Alert Tags"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet ID Tags > Medical Alert Tags"
     description: Tags that flag medical conditions.
     keywords: [medical alert tag, medical id]
   - id: id-tags/slide-on
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet ID Tags > Slide-On Collar Tags"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet ID Tags > Slide-On Collar Tags"
     description: Silent tags that slide onto the collar.
     keywords: [slide on tag, silent tag, collar tag]
 
   # ── Leashes ──────────────────────────────────────────────────
   - id: leash-extensions
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Leash Extensions"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Leash Extensions"
     description: Extensions and couplers that lengthen a leash.
     keywords: [leash extension, coupler]
   - id: leashes/double
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Leashes > Double Pet Leashes"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Leashes > Double Pet Leashes"
     description: Leashes for walking two pets at once.
     keywords: [double leash, two dog leash, coupler leash]
   - id: leashes/hands-free
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Leashes > Hands-Free Leashes"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Leashes > Hands-Free Leashes"
     description: Waist-worn running leashes.
     keywords: [hands free leash, running leash, waist leash]
   - id: leashes/no-pull
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Leashes > No-Pull Leashes"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Leashes > No-Pull Leashes"
     description: Bungee and anti-pull leashes.
     keywords: [no pull leash, bungee leash]
   - id: leashes/slip-leads
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Leashes > Slip Leads"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Leashes > Slip Leads"
     description: Combined collar and leash slip leads.
     keywords: [slip lead, slip leash]
   - id: leashes/standard
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Leashes > Standard Leashes"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Leashes > Standard Leashes"
     description: Everyday fixed-length and retractable leashes.
     keywords: [leash, retractable leash, leather leash, rope leash]
   - id: leashes/training
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Leashes > Training Leashes"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Leashes > Training Leashes"
     description: Long lines and training leads.
     keywords: [long line, training lead, recall leash]
 
   # ── Medical ──────────────────────────────────────────────────
   - id: medical-collars
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Medical Collars"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Medical Collars"
     description: Recovery cones and e-collars.
     keywords: [cone, recovery collar, e-collar, inflatable collar]
   - id: medical-tape-bandages
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Medical Tape & Bandages"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Medical Tape & Bandages"
     description: Self-adhesive wraps, tape and bandages.
     keywords: [vet wrap, bandage, self adhesive wrap]
   - id: medicine/allergy
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Medicine > Allergy Relief"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Medicine > Allergy Relief"
     description: Itch and allergy relief medications.
     keywords: [allergy relief, anti itch, antihistamine]
   - id: medicine/antibiotics
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Medicine > Antibiotics"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Medicine > Antibiotics"
     description: Antibiotic medications for pets.
     keywords: [antibiotic, amoxicillin, infection]
   - id: medicine/antiparasitics
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Medicine > Antiparasitics"
-    description: Heartworm preventives and other internal parasite treatments, excluding dewormers and flea and tick products.
-    keywords: [heartworm, antiparasitic, ivermectin, coccidia]
-  - id: dewormers # custom subtype of Pet Medicine > Antiparasitics
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Medicine > Antiparasitics > Dewormers"
-    description: Products that treat or prevent intestinal worms such as roundworms and tapeworms.
-    keywords: [dewormer, wormer, praziquantel, pyrantel, fenbendazole]
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Medicine > Antiparasitics"
+    description: Dewormers, heartworm preventives and other internal parasite treatments, excluding flea and tick products.
+    keywords: [dewormer, wormer, praziquantel, pyrantel, fenbendazole, heartworm, antiparasitic, ivermectin, coccidia]
   - id: medicine/anxiety
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Medicine > Anxiety Relief"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Medicine > Anxiety Relief"
     description: Calming medications and anxiety aids.
     keywords: [calming, anxiety relief, stress relief]
   - id: medicine/digestive
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Medicine > Digestive Aids"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Medicine > Digestive Aids"
     description: Anti-diarrheal and digestive medications.
     keywords: [anti diarrhea, digestive aid, upset stomach]
   - id: medicine/ear-eye
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Medicine > Ear & Eye Medicine"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Medicine > Ear & Eye Medicine"
     description: Ear cleaners, ear drops and eye medications.
     keywords: [ear cleaner, ear drops, ear infection]
   - id: medicine/pain
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Medicine > Pain Relievers"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Medicine > Pain Relievers"
     description: Pain relief and anti-inflammatory medications.
     keywords: [pain relief, anti inflammatory, nsaid]
   - id: muzzles
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Muzzles"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Muzzles"
     description: Basket and fabric muzzles.
     keywords: [muzzle, basket muzzle]
 
   # ── Oral Care ────────────────────────────────────────────────
   - id: oral-care/dental-chews
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Oral Care Supplies > Dental Chews"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Oral Care Supplies > Dental Chews"
     description: Chews that clean teeth and freshen breath.
     keywords: [dental chew, dental stick, tartar control]
   - id: oral-care/gels
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Oral Care Supplies > Dental Gels"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Oral Care Supplies > Dental Gels"
     description: Gels applied to teeth and gums.
     keywords: [dental gel, plaque gel]
   - id: oral-care/sprays
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Oral Care Supplies > Dental Sprays"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Oral Care Supplies > Dental Sprays"
     description: Breath and plaque sprays.
     keywords: [dental spray, breath spray]
   - id: oral-care/water-additives
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Oral Care Supplies > Dental Water Additives"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Oral Care Supplies > Dental Water Additives"
     description: Additives mixed into drinking water.
     keywords: [water additive, dental water]
   - id: oral-care/wipes
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Oral Care Supplies > Dental Wipes"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Oral Care Supplies > Dental Wipes"
     description: Finger wipes for cleaning teeth.
     keywords: [dental wipes, teeth wipes]
   - id: oral-care/rinses
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Oral Care Supplies > Oral Rinses"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Oral Care Supplies > Oral Rinses"
     description: Oral rinses and mouthwashes for pets.
     keywords: [oral rinse, pet mouthwash]
   - id: oral-care/toothbrushes
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Oral Care Supplies > Toothbrushes"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Oral Care Supplies > Toothbrushes"
     description: Toothbrushes and finger brushes for pets.
     keywords: [pet toothbrush, finger brush]
   - id: oral-care/toothpaste
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Oral Care Supplies > Toothpaste"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Oral Care Supplies > Toothpaste"
     description: Enzymatic and flavored pet toothpastes.
     keywords: [pet toothpaste, enzymatic toothpaste]
 
   # ── Steps, Strollers, Sunscreen ──────────────────────────────
   - id: steps-ramps
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Steps & Ramps"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Steps & Ramps"
     description: Steps and ramps for beds, sofas and vehicles.
     keywords: [pet stairs, pet steps, dog ramp, car ramp]
   - id: strollers/detachable
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Strollers > Detachable Carrier Pet Strollers"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Strollers > Detachable Carrier Pet Strollers"
     description: Strollers with a removable carrier.
     keywords: [detachable stroller, carrier stroller]
   - id: strollers/double-decker
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Strollers > Double-Decker Strollers"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Strollers > Double-Decker Strollers"
     description: Two-level strollers.
     keywords: [double decker stroller]
   - id: strollers/jogging
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Strollers > Jogging Strollers"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Strollers > Jogging Strollers"
     description: Strollers built for running.
     keywords: [jogging stroller, running stroller]
   - id: strollers/multi
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Strollers > Multi-Strollers"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Strollers > Multi-Strollers"
     description: Strollers for multiple pets.
     keywords: [multi pet stroller]
   - id: strollers/standard
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Strollers > Standard Strollers"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Strollers > Standard Strollers"
     description: Everyday pet strollers.
     keywords: [pet stroller, dog stroller]
   - id: sunscreen
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Sunscreen"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Sunscreen"
     description: Pet-safe sunscreen and nose balms with SPF.
     keywords: [pet sunscreen, spf, nose balm]
 
   # ── Training Aids ────────────────────────────────────────────
   - id: training/clickers
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Training Aids > Pet Training Clickers & Treat Dispensers"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Training Aids > Pet Training Clickers & Treat Dispensers"
     description: Clickers, treat pouches and training dispensers.
     keywords: [clicker, treat pouch, treat dispenser]
   - id: training/pad-holders
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Training Aids > Pet Training Pad Holders"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Training Aids > Pet Training Pad Holders"
     description: Trays and frames that hold potty pads.
     keywords: [pad holder, potty tray]
   - id: training/pads
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Training Aids > Pet Training Pads"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Training Aids > Pet Training Pads"
     description: Disposable and washable potty pads.
     keywords: [pee pads, puppy pads, potty pads]
   - id: training/sprays
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Training Aids > Pet Training Sprays & Solutions"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Training Aids > Pet Training Sprays & Solutions"
     description: Deterrent and attractant training sprays.
     keywords: [bitter spray, deterrent spray, potty attractant]
 
   # ── Vitamins & Supplements ───────────────────────────────────
   - id: supplements/cbd
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Vitamins & Supplements > CBD Supplements"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Vitamins & Supplements > CBD Supplements"
     description: CBD and hemp oil supplements.
     keywords: [cbd, hemp oil, hemp chews]
   - id: supplements/calcium
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Vitamins & Supplements > Calcium"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Vitamins & Supplements > Calcium"
     description: Calcium supplements, including reptile calcium powder.
     keywords: [calcium, calcium powder, d3]
   - id: supplements/dental
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Vitamins & Supplements > Dental Health"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Vitamins & Supplements > Dental Health"
     description: Supplements that support oral health.
     keywords: [dental supplement, plaque powder]
   - id: supplements/fish-oil
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Vitamins & Supplements > Fish Oil"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Vitamins & Supplements > Fish Oil"
     description: Omega-3 and fish oil supplements.
     keywords: [fish oil, omega 3, salmon oil]
   - id: supplements/immune
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Vitamins & Supplements > Immune Support"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Vitamins & Supplements > Immune Support"
     description: Supplements that support immune health.
     keywords: [immune support, antioxidant]
   - id: supplements/joint
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Vitamins & Supplements > Joint Health"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Vitamins & Supplements > Joint Health"
     description: Chews or powders that support joint health and mobility.
     keywords: [glucosamine, chondroitin, msm, joint, mobility, hip]
   - id: supplements/multivitamins
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Vitamins & Supplements > Multi-Vitamins"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Vitamins & Supplements > Multi-Vitamins"
     description: Daily multivitamins for pets.
     keywords: [multivitamin, daily vitamin]
   - id: supplements/probiotics
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Vitamins & Supplements > Probiotics"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Vitamins & Supplements > Probiotics"
     description: Probiotics and digestive supplements.
     keywords: [probiotic, prebiotic, gut health]
   - id: supplements/skin-coat
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Vitamins & Supplements > Skin & Coat"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Vitamins & Supplements > Skin & Coat"
     description: Supplements for skin and coat health.
     keywords: [skin and coat, biotin, shedding]
   - id: supplements/weight
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Vitamins & Supplements > Weight Control"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Vitamins & Supplements > Weight Control"
     description: Supplements that support healthy weight.
     keywords: [weight control, weight management, l-carnitine]
 
   # ── Waste ────────────────────────────────────────────────────
   - id: waste-dispensers/flashlight
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Waste Bag Dispensers & Holders > Flashlight Dispensers"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Waste Bag Dispensers & Holders > Flashlight Dispensers"
     description: Waste bag dispensers with a built-in flashlight.
     keywords: [flashlight dispenser, light bag dispenser]
   - id: waste-dispensers/standard
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Waste Bag Dispensers & Holders > Standard Dispensers & Holders"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Waste Bag Dispensers & Holders > Standard Dispensers & Holders"
     description: Leash-clip poop bag dispensers.
     keywords: [poop bag holder, bag dispenser, leash dispenser]
   - id: waste-dispensers/storage
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Waste Bag Dispensers & Holders > Storage Dispensers"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Waste Bag Dispensers & Holders > Storage Dispensers"
     description: Dispensers that store bulk bag rolls.
     keywords: [bag storage, roll holder]
   - id: waste-bags
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Waste Bags"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Waste Bags"
     description: Poop bags and refill rolls.
     keywords: [poop bags, waste bags, refill rolls, compostable bags]
   - id: waste-disposal/doggy-bags
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Waste Disposal Systems & Tools > Doggy Bags"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Waste Disposal Systems & Tools > Doggy Bags"
     description: Bags for collecting and carrying pet waste.
     keywords: [doggy bag, pickup bag]
   - id: waste-disposal/litter-trays
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Waste Disposal Systems & Tools > Litter Trays"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Waste Disposal Systems & Tools > Litter Trays"
     description: Litter boxes, self-cleaning litter boxes and pans.
     keywords: [litter box, litter tray, self cleaning litter box, litter pan]
   - id: waste-disposal/systems
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Waste Disposal Systems & Tools > Pet Waste Disposal Systems"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Waste Disposal Systems & Tools > Pet Waste Disposal Systems"
     description: Litter disposal pails and digester systems.
     keywords: [litter genie, disposal pail, waste digester]
   - id: waste-disposal/scoopers
-    name: "Animals & Pet Supplies >  Pet Supplies > Pet Waste Disposal Systems & Tools > Waste Scoopers"
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Waste Disposal Systems & Tools > Waste Scoopers"
     description: Pooper scoopers and litter scoops.
     keywords: [pooper scooper, litter scoop, rake]
 
   # ── Reptile & Amphibian Supplies ─────────────────────────────
   - id: reptile/food
-    name: "Animals & Pet Supplies >  Pet Supplies > Reptile & Amphibian Supplies > Reptile & Amphibian Food"
+    name: "Animals & Pet Supplies > Pet Supplies > Reptile & Amphibian Supplies > Reptile & Amphibian Food"
     description: Pellets, gel diets and preserved insects for reptiles and amphibians.
     keywords: [reptile food, turtle pellets, dried mealworms, gecko diet]
   - id: reptile/habitat-accessories
-    name: "Animals & Pet Supplies >  Pet Supplies > Reptile & Amphibian Supplies > Reptile & Amphibian Habitat Accessories"
+    name: "Animals & Pet Supplies > Pet Supplies > Reptile & Amphibian Supplies > Reptile & Amphibian Habitat Accessories"
     description: Hides, branches, water dishes and decor for terrariums.
     keywords: [reptile hide, basking platform, terrarium decor]
   - id: reptile/heating-lighting
-    name: "Animals & Pet Supplies >  Pet Supplies > Reptile & Amphibian Supplies > Reptile & Amphibian Habitat Heating & Lighting"
+    name: "Animals & Pet Supplies > Pet Supplies > Reptile & Amphibian Supplies > Reptile & Amphibian Habitat Heating & Lighting"
     description: Heat lamps, UVB bulbs, heat mats and thermostats.
     keywords: [uvb, heat lamp, heat mat, basking bulb, ceramic heater]
   - id: reptile/habitats
-    name: "Animals & Pet Supplies >  Pet Supplies > Reptile & Amphibian Supplies > Reptile & Amphibian Habitats"
+    name: "Animals & Pet Supplies > Pet Supplies > Reptile & Amphibian Supplies > Reptile & Amphibian Habitats"
     description: Terrariums, vivariums and tanks.
     keywords: [terrarium, vivarium, reptile tank]
   - id: reptile/substrates
-    name: "Animals & Pet Supplies >  Pet Supplies > Reptile & Amphibian Supplies > Reptile & Amphibian Substrates"
+    name: "Animals & Pet Supplies > Pet Supplies > Reptile & Amphibian Supplies > Reptile & Amphibian Substrates"
     description: Bedding and substrates for terrariums.
     keywords: [reptile substrate, coconut fiber, reptile carpet, bioactive]
 
   # ── Small Animal Supplies ────────────────────────────────────
   - id: small-animal/bedding
-    name: "Animals & Pet Supplies >  Pet Supplies > Small Animal Supplies > Small Animal Bedding"
+    name: "Animals & Pet Supplies > Pet Supplies > Small Animal Supplies > Small Animal Bedding"
     description: Paper, aspen and other bedding for small animals.
     keywords: [paper bedding, aspen shavings, small animal bedding]
   - id: small-animal/food
-    name: "Animals & Pet Supplies >  Pet Supplies > Small Animal Supplies > Small Animal Food"
+    name: "Animals & Pet Supplies > Pet Supplies > Small Animal Supplies > Small Animal Food"
     description: Food and hay for rabbits, guinea pigs, hamsters and other small pets.
     keywords: [timothy hay, rabbit food, guinea pig food, hamster food]
   - id: small-animal/habitat-accessories
-    name: "Animals & Pet Supplies >  Pet Supplies > Small Animal Supplies > Small Animal Habitat Accessories"
+    name: "Animals & Pet Supplies > Pet Supplies > Small Animal Supplies > Small Animal Habitat Accessories"
     description: Wheels, hides, water bottles and hay racks for small animal cages.
     keywords: [exercise wheel, hideout, water bottle, hay rack]
   - id: small-animal/habitats
-    name: "Animals & Pet Supplies >  Pet Supplies > Small Animal Supplies > Small Animal Habitats & Cages"
+    name: "Animals & Pet Supplies > Pet Supplies > Small Animal Supplies > Small Animal Habitats & Cages"
     description: Cages, hutches and habitats for small animals.
     keywords: [hamster cage, rabbit hutch, guinea pig cage]
   - id: small-animal/treats
-    name: "Animals & Pet Supplies >  Pet Supplies > Small Animal Supplies > Small Animal Treats"
+    name: "Animals & Pet Supplies > Pet Supplies > Small Animal Supplies > Small Animal Treats"
     description: Treats and chews for small animals.
     keywords: [small animal treat, chew stick, rabbit treat]
 
   # ── Vehicle Pet Barriers ─────────────────────────────────────
   - id: vehicle-barriers/backseat
-    name: "Animals & Pet Supplies >  Pet Supplies > Vehicle Pet Barriers > Backseat Barriers"
+    name: "Animals & Pet Supplies > Pet Supplies > Vehicle Pet Barriers > Backseat Barriers"
     description: Barriers between the front and back seats.
     keywords: [backseat barrier, console barrier]
   - id: vehicle-barriers/cargo
-    name: "Animals & Pet Supplies >  Pet Supplies > Vehicle Pet Barriers > Cargo Area Barriers"
+    name: "Animals & Pet Supplies > Pet Supplies > Vehicle Pet Barriers > Cargo Area Barriers"
     description: Barriers that keep pets in the cargo area.
     keywords: [cargo barrier, suv barrier]
   - id: vehicle-barriers/door
-    name: "Animals & Pet Supplies >  Pet Supplies > Vehicle Pet Barriers > Door Barriers"
+    name: "Animals & Pet Supplies > Pet Supplies > Vehicle Pet Barriers > Door Barriers"
     description: Door guards that protect against scratches.
     keywords: [door guard, door protector]
   - id: vehicle-barriers/partitions
-    name: "Animals & Pet Supplies >  Pet Supplies > Vehicle Pet Barriers > Partitions"
+    name: "Animals & Pet Supplies > Pet Supplies > Vehicle Pet Barriers > Partitions"
     description: Partition panels and nets for vehicles.
     keywords: [vehicle partition, car net]
   - id: vehicle-barriers/window
-    name: "Animals & Pet Supplies >  Pet Supplies > Vehicle Pet Barriers > Window Barriers"
+    name: "Animals & Pet Supplies > Pet Supplies > Vehicle Pet Barriers > Window Barriers"
     description: Window guards and vents for pets.
     keywords: [window guard, window vent]
+
+  # ── Parent levels (fallback categories) ─────────────────────
+  # Shopify categories that also contain more specific subcategories.
+  # Choose one only when no subcategory below it fits (rules/TAX-01.md).
+  - id: parent/animals-pet-supplies
+    name: "Animals & Pet Supplies"
+    description: "Top-level category for products for animals. Use when the product is for animals but no Live Animals or Pet Supplies subcategory fits, for example livestock, equine or poultry products. Subcategories: Live Animals, Pet Supplies."
+    keywords: ["animals & pet supplies", "livestock", "equine", "horse", "cattle", "swine", "goat", "sheep", "poultry", "farm animal"]
+    fallback: true
+  - id: parent/pet-supplies
+    name: "Animals & Pet Supplies > Pet Supplies"
+    description: "General pet supplies for companion animals. Use when the product is for pets but no more specific pet category fits. Subcategories: Bird Supplies, Cat Supplies, Dog Supplies, Fish & Aquatic Supplies, Pet Agility Equipment, Pet Apparel, Pet Apparel Hangers, Pet Bed Accessories, Pet Beds, Pet Bells & Charms, Pet Biometric Monitors, Pet Bowl Mats, Pet Bowl Stands, Pet Bowls, Feeders & Waterers, Pet Carrier & Crate Accessories, Pet Carriers & Crates, Pet Collars & Harnesses, Pet Containment Systems, Pet Door Accessories, Pet Doors, Pet Eye Drops & Lubricants, Pet First Aid & Emergency Kits, Pet Flea & Tick Control, Pet Food Containers, Pet Food Scoops, Pet Grooming Supplies, Pet Heating Pad Accessories, Pet Heating Pads, Pet ID Tags, Pet Leash Extensions, Pet Leashes, Pet Medical Collars, Pet Medical Tape & Bandages, Pet Medicine, Pet Muzzles, Pet Oral Care Supplies, Pet Steps & Ramps, Pet Strollers, Pet Sunscreen, Pet Training Aids, Pet Vitamins & Supplements, Pet Waste Bag Dispensers & Holders, Pet Waste Bags, Pet Waste Disposal Systems & Tools, Reptile & Amphibian Supplies, Small Animal Supplies, Vehicle Pet Barriers."
+    keywords: ["pet supplies", "bird supplies", "cat supplies", "dog supplies", "fish & aquatic supplies", "pet agility equipment", "pet apparel", "pet apparel hangers", "pet bed accessories"]
+    fallback: true
+  - id: parent/bird-supplies
+    name: "Animals & Pet Supplies > Pet Supplies > Bird Supplies"
+    description: "General bird supplies category. Use when a product belongs here but none of its subcategories fits. Subcategories: Bird Cage Accessories, Bird Cages & Stands, Bird Food, Bird Gyms & Playstands, Bird Ladders & Perches, Bird Toys, Bird Treats."
+    keywords: ["bird supplies", "bird cage accessories", "bird cages & stands", "bird food", "bird gyms & playstands", "bird ladders & perches", "bird toys", "bird treats"]
+    fallback: true
+  - id: parent/cat-supplies
+    name: "Animals & Pet Supplies > Pet Supplies > Cat Supplies"
+    description: "General cat supplies category. Use when a product belongs here but none of its subcategories fits. Subcategories: Cat Food, Cat Furniture, Cat Furniture Accessories, Cat Litter, Cat Toys, Cat Treats."
+    keywords: ["cat supplies", "cat food", "cat furniture", "cat furniture accessories", "cat litter", "cat toys", "cat treats"]
+    fallback: true
+  - id: parent/dog-supplies
+    name: "Animals & Pet Supplies > Pet Supplies > Dog Supplies"
+    description: "General dog supplies category. Use when a product belongs here but none of its subcategories fits. Subcategories: Dog Diaper Pads & Liners, Dog Diapers, Dog Food, Dog Houses, Dog Kennel & Run Accessories, Dog Kennels & Runs, Dog Toys, Dog Treadmills, Dog Treats."
+    keywords: ["dog supplies", "dog diaper pads & liners", "dog diapers", "dog food", "dog houses", "dog kennel & run accessories", "dog kennels & runs", "dog toys", "dog treadmills"]
+    fallback: true
+  - id: parent/fish-aquatic-supplies
+    name: "Animals & Pet Supplies > Pet Supplies > Fish & Aquatic Supplies"
+    description: "General fish & aquatic supplies category. Use when a product belongs here but none of its subcategories fits. Subcategories: Aquarium & Pond Tubings, Aquarium Air Stones & Diffusers, Aquarium Cleaning Supplies, Aquarium Decors, Aquarium Filters, Aquarium Fish Nets, Aquarium Gravel & Substrates, Aquarium Lighting, Aquarium Overflow Boxes, Aquarium Stands, Aquarium Temperature Controllers, Aquarium Water Treatments, Aquariums, Aquatic Plant Fertilizers, Fish Feeders, Fish Food."
+    keywords: ["fish & aquatic supplies", "aquarium & pond tubings", "aquarium air stones & diffusers", "aquarium cleaning supplies", "aquarium decors", "aquarium filters", "aquarium fish nets", "aquarium gravel & substrates", "aquarium lighting"]
+    fallback: true
+  - id: parent/pet-agility-equipment
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Agility Equipment"
+    description: "General pet agility equipment category. Use when a product belongs here but none of its subcategories fits. Subcategories: A-Frames, Agility Tunnels, Dog Walks & Ramps, Jump Bars, Pause Tables, Poles, Teeter Boards, Tire Jumps."
+    keywords: ["pet agility equipment", "a-frames", "agility tunnels", "dog walks & ramps", "jump bars", "pause tables", "poles", "teeter boards", "tire jumps"]
+    fallback: true
+  - id: parent/pet-apparel
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Apparel"
+    description: "General pet apparel category. Use when a product belongs here but none of its subcategories fits. Subcategories: Pet Bandanas, Pet Bows & Ribbons, Pet Coats, Pet Collars & Ties, Pet Costumes, Pet Dresses, Pet Hats, Pet Hoodies, Pet Jackets, Pet Rain Coats, Pet Safety Vests, Pet Scarves, Pet Shirts, Pet Shoes, Pet Socks, Pet Sunglasses, Pet Sweaters."
+    keywords: ["pet apparel", "pet bandanas", "pet bows & ribbons", "pet coats", "pet collars & ties", "pet costumes", "pet dresses", "pet hats", "pet hoodies"]
+    fallback: true
+  - id: parent/pet-beds
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Beds"
+    description: "General pet beds category. Use when a product belongs here but none of its subcategories fits. Subcategories: Baskets, Bolster Beds, Caves, Cooling Beds, Donuts, Hammocks, Nests, Orthopedic Beds, Pet Chairs, Pet Cots, Pillow Beds, Radiator Beds, Towers."
+    keywords: ["pet beds", "baskets", "bolster beds", "caves", "cooling beds", "donuts", "hammocks", "nests", "orthopedic beds"]
+    fallback: true
+  - id: parent/pet-bells-charms
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Bells & Charms"
+    description: "General pet bells & charms category. Use when a product belongs here but none of its subcategories fits. Subcategories: Collar Bells, Collar Charms, ID Tag Charms."
+    keywords: ["pet bells & charms", "collar bells", "collar charms", "id tag charms"]
+    fallback: true
+  - id: parent/pet-biometric-monitors
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Biometric Monitors"
+    description: "General pet biometric monitors category. Use when a product belongs here but none of its subcategories fits. Subcategories: Pet Glucose Meters, Pet Pedometers, Pet Thermometers."
+    keywords: ["pet biometric monitors", "pet glucose meters", "pet pedometers", "pet thermometers"]
+    fallback: true
+  - id: parent/pet-bowls-feeders-waterers
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Bowls, Feeders & Waterers"
+    description: "General pet bowls, feeders & waterers category. Use when a product belongs here but none of its subcategories fits. Subcategories: Automatic Feeders, Bowls, Elevated Bowls, Gravity Feeders, Slow Feeder Bowls, Travel Bowls, Water Dispensers, Water Fountains."
+    keywords: ["pet bowls, feeders & waterers", "automatic feeders", "bowls", "elevated bowls", "gravity feeders", "slow feeder bowls", "travel bowls", "water dispensers", "water fountains"]
+    fallback: true
+  - id: parent/pet-carriers-crates
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Carriers & Crates"
+    description: "General pet carriers & crates category. Use when a product belongs here but none of its subcategories fits. Subcategories: Air Travel Approved Carriers, Backpack Carriers, Car Crates, Furniture-Style Crates, Hard-Sided Carriers, Rolling Carriers, Slings & Wearable Carriers, Soft-Sided Carriers, Soft-Sided Crates, Wheeled Carriers."
+    keywords: ["pet carriers & crates", "air travel approved carriers", "backpack carriers", "car crates", "furniture-style crates", "hard-sided carriers", "rolling carriers", "slings & wearable carriers", "soft-sided carriers"]
+    fallback: true
+  - id: parent/pet-collars-harnesses
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Collars & Harnesses"
+    description: "General pet collars & harnesses category. Use when a product belongs here but none of its subcategories fits. Subcategories: Breakaway & Safety Collars, Flea Collars, GPS Collars, Harnesses, LED Collars, Martingale Collars, Personalized ID Collars, Standard Collars, Training, Choke & Pinch Collars, Vests."
+    keywords: ["pet collars & harnesses", "breakaway & safety collars", "flea collars", "gps collars", "harnesses", "led collars", "martingale collars", "personalized id collars", "standard collars"]
+    fallback: true
+  - id: parent/pet-containment-systems
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Containment Systems"
+    description: "General pet containment systems category. Use when a product belongs here but none of its subcategories fits. Subcategories: Electronic Invisible Fences, Enclosures & Cages, Exercise Pens, Fences & Gates, Kennels, Playpens."
+    keywords: ["pet containment systems", "electronic invisible fences", "enclosures & cages", "exercise pens", "fences & gates", "kennels", "playpens"]
+    fallback: true
+  - id: parent/pet-doors
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Doors"
+    description: "General pet doors category. Use when a product belongs here but none of its subcategories fits. Subcategories: Door-Mounted Doors, Electronic Automatic Doors, Sliding Glass Doors, Wall-Mounted Doors, Window-Mounted Doors."
+    keywords: ["pet doors", "door-mounted doors", "electronic automatic doors", "sliding glass doors", "wall-mounted doors", "window-mounted doors"]
+    fallback: true
+  - id: parent/pet-eye-drops-lubricants
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Eye Drops & Lubricants"
+    description: "General pet eye drops & lubricants category. Use when a product belongs here but none of its subcategories fits. Subcategories: Conjunctivitis Treatments, Eye Cleaners, Eye Irrigation Solutions, Eye Lubricants, Eye Washes, Tear Stain Removers."
+    keywords: ["pet eye drops & lubricants", "conjunctivitis treatments", "eye cleaners", "eye irrigation solutions", "eye lubricants", "eye washes", "tear stain removers"]
+    fallback: true
+  - id: parent/pet-first-aid-emergency-kits
+    name: "Animals & Pet Supplies > Pet Supplies > Pet First Aid & Emergency Kits"
+    description: "General pet first aid & emergency kits category. Use when a product belongs here but none of its subcategories fits. Subcategories: General First Aid Kits, Trauma Kits, Travel First Aid Kits."
+    keywords: ["pet first aid & emergency kits", "general first aid kits", "trauma kits", "travel first aid kits"]
+    fallback: true
+  - id: parent/pet-flea-tick-control
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Flea & Tick Control"
+    description: "General pet flea & tick control category. Use when a product belongs here but none of its subcategories fits. Subcategories: Flea & Tick Collars, Flea & Tick Foggers, Flea & Tick Shampoos, Flea & Tick Sprays, Flea Combs, Oral Medication, Spot Treatments."
+    keywords: ["pet flea & tick control", "flea & tick collars", "flea & tick foggers", "flea & tick shampoos", "flea & tick sprays", "flea combs", "oral medication", "spot treatments"]
+    fallback: true
+  - id: parent/pet-food-containers
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Food Containers"
+    description: "General pet food containers category. Use when a product belongs here but none of its subcategories fits. Subcategories: Can Covers, Food Storage Bins, Food Storage Containers."
+    keywords: ["pet food containers", "can covers", "food storage bins", "food storage containers"]
+    fallback: true
+  - id: parent/pet-grooming-supplies
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Grooming Supplies"
+    description: "General pet grooming supplies category. Use when a product belongs here but none of its subcategories fits. Subcategories: Pet Combs & Brushes, Pet Fragrances & Deodorizing Sprays, Pet Hair Clippers & Trimmers, Pet Hair Dryers, Pet Nail Polish, Pet Nail Tools, Pet Shampoo & Conditioner, Pet Wipes."
+    keywords: ["pet grooming supplies", "pet combs & brushes", "pet fragrances & deodorizing sprays", "pet hair clippers & trimmers", "pet hair dryers", "pet nail polish", "pet nail tools", "pet shampoo & conditioner", "pet wipes"]
+    fallback: true
+  - id: parent/pet-id-tags
+    name: "Animals & Pet Supplies > Pet Supplies > Pet ID Tags"
+    description: "General pet id tags category. Use when a product belongs here but none of its subcategories fits. Subcategories: Digital QR Code Tags, Embroidered Tags, Medical Alert Tags, Slide-On Collar Tags."
+    keywords: ["pet id tags", "digital qr code tags", "embroidered tags", "medical alert tags", "slide-on collar tags"]
+    fallback: true
+  - id: parent/pet-leashes
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Leashes"
+    description: "General pet leashes category. Use when a product belongs here but none of its subcategories fits. Subcategories: Double Pet Leashes, Hands-Free Leashes, No-Pull Leashes, Slip Leads, Standard Leashes, Training Leashes."
+    keywords: ["pet leashes", "double pet leashes", "hands-free leashes", "no-pull leashes", "slip leads", "standard leashes", "training leashes"]
+    fallback: true
+  - id: parent/pet-medicine
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Medicine"
+    description: "General pet medicine category. Use when a product belongs here but none of its subcategories fits. Subcategories: Allergy Relief, Antibiotics, Antiparasitics, Anxiety Relief, Digestive Aids, Ear & Eye Medicine, Pain Relievers."
+    keywords: ["pet medicine", "allergy relief", "antibiotics", "antiparasitics", "anxiety relief", "digestive aids", "ear & eye medicine", "pain relievers"]
+    fallback: true
+  - id: parent/pet-oral-care-supplies
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Oral Care Supplies"
+    description: "General pet oral care supplies category. Use when a product belongs here but none of its subcategories fits. Subcategories: Dental Chews, Dental Gels, Dental Sprays, Dental Water Additives, Dental Wipes, Oral Rinses, Toothbrushes, Toothpaste."
+    keywords: ["pet oral care supplies", "dental chews", "dental gels", "dental sprays", "dental water additives", "dental wipes", "oral rinses", "toothbrushes", "toothpaste"]
+    fallback: true
+  - id: parent/pet-strollers
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Strollers"
+    description: "General pet strollers category. Use when a product belongs here but none of its subcategories fits. Subcategories: Detachable Carrier Pet Strollers, Double-Decker Strollers, Jogging Strollers, Multi-Strollers, Standard Strollers."
+    keywords: ["pet strollers", "detachable carrier pet strollers", "double-decker strollers", "jogging strollers", "multi-strollers", "standard strollers"]
+    fallback: true
+  - id: parent/pet-training-aids
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Training Aids"
+    description: "General pet training aids category. Use when a product belongs here but none of its subcategories fits. Subcategories: Pet Training Clickers & Treat Dispensers, Pet Training Pad Holders, Pet Training Pads, Pet Training Sprays & Solutions."
+    keywords: ["pet training aids", "pet training clickers & treat dispensers", "pet training pad holders", "pet training pads", "pet training sprays & solutions"]
+    fallback: true
+  - id: parent/pet-vitamins-supplements
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Vitamins & Supplements"
+    description: "General pet vitamins & supplements category. Use when a product belongs here but none of its subcategories fits. Subcategories: CBD Supplements, Calcium, Dental Health, Fish Oil, Immune Support, Joint Health, Multi-Vitamins, Probiotics, Skin & Coat, Weight Control."
+    keywords: ["pet vitamins & supplements", "cbd supplements", "calcium", "dental health", "fish oil", "immune support", "joint health", "multi-vitamins", "probiotics"]
+    fallback: true
+  - id: parent/pet-waste-bag-dispensers-holders
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Waste Bag Dispensers & Holders"
+    description: "General pet waste bag dispensers & holders category. Use when a product belongs here but none of its subcategories fits. Subcategories: Flashlight Dispensers, Standard Dispensers & Holders, Storage Dispensers."
+    keywords: ["pet waste bag dispensers & holders", "flashlight dispensers", "standard dispensers & holders", "storage dispensers"]
+    fallback: true
+  - id: parent/pet-waste-disposal-systems-tools
+    name: "Animals & Pet Supplies > Pet Supplies > Pet Waste Disposal Systems & Tools"
+    description: "General pet waste disposal systems & tools category. Use when a product belongs here but none of its subcategories fits. Subcategories: Doggy Bags, Litter Trays, Pet Waste Disposal Systems, Waste Scoopers."
+    keywords: ["pet waste disposal systems & tools", "doggy bags", "litter trays", "pet waste disposal systems", "waste scoopers"]
+    fallback: true
+  - id: parent/reptile-amphibian-supplies
+    name: "Animals & Pet Supplies > Pet Supplies > Reptile & Amphibian Supplies"
+    description: "General reptile & amphibian supplies category. Use when a product belongs here but none of its subcategories fits. Subcategories: Reptile & Amphibian Food, Reptile & Amphibian Habitat Accessories, Reptile & Amphibian Habitat Heating & Lighting, Reptile & Amphibian Habitats, Reptile & Amphibian Substrates."
+    keywords: ["reptile & amphibian supplies", "reptile & amphibian food", "reptile & amphibian habitat accessories", "reptile & amphibian habitat heating & lighting", "reptile & amphibian habitats", "reptile & amphibian substrates"]
+    fallback: true
+  - id: parent/small-animal-supplies
+    name: "Animals & Pet Supplies > Pet Supplies > Small Animal Supplies"
+    description: "General small animal supplies category. Use when a product belongs here but none of its subcategories fits. Subcategories: Small Animal Bedding, Small Animal Food, Small Animal Habitat Accessories, Small Animal Habitats & Cages, Small Animal Treats."
+    keywords: ["small animal supplies", "small animal bedding", "small animal food", "small animal habitat accessories", "small animal habitats & cages", "small animal treats"]
+    fallback: true
+  - id: parent/vehicle-pet-barriers
+    name: "Animals & Pet Supplies > Pet Supplies > Vehicle Pet Barriers"
+    description: "General vehicle pet barriers category. Use when a product belongs here but none of its subcategories fits. Subcategories: Backseat Barriers, Cargo Area Barriers, Door Barriers, Partitions, Window Barriers."
+    keywords: ["vehicle pet barriers", "backseat barriers", "cargo area barriers", "door barriers", "partitions", "window barriers"]
+    fallback: true
