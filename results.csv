@@ -1,0 +1,2 @@
+timestamp,model,skus,fields,fixed_score,model_score,overall_score,blank_flagged,silent_missing,flagged_errors,silent_errors,note
+2026-10-16T15:28,gemini-3.5-flash-lite,1,27,100.0,30.5,84.6,2,0,0,2,baseline: no allowed lists

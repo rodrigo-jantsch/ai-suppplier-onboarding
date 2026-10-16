@@ -21,7 +21,8 @@ import re
 from pathlib import Path
 from typing import Callable, Literal
 
-from pydantic import BaseModel, Field
+import yaml
+from pydantic import BaseModel, Field, create_model
 from rapidfuzz import fuzz
 
 from src import llm
@@ -188,13 +189,64 @@ class Proposed(BaseModel):
 class ModelListing(BaseModel):
     """What the model is asked to fill. Everything else comes from code."""
     title: Proposed
-    product_type: Proposed = Field(description="Exactly one category name, copied from CATEGORY CANDIDATES")
+    product_type: Proposed = Field(description="The SHOPIFY category: exactly one name from CATEGORY CANDIDATES")
     body_html: Proposed = Field(description="Short HTML description: one <p> and a <ul> of key facts")
-    ingredients: Proposed = Field(description="Active ingredient(s) and strength, e.g. '12.5% tiamulin hydrogen fumarate'")
-    form: Proposed = Field(description="List: product form and how it's given, e.g. ['Solution', 'Drinking Water']")
-    department: Proposed
-    category: Proposed
-    product_types: Proposed = Field(description="List of short filter terms: uses, conditions treated, product format")
+    ingredients: Proposed = Field(description="Active ingredient(s) WITH strength, e.g. '12.5% tiamulin hydrogen fumarate'")
+    form: Proposed = Field(description="LIST: product form and how it's given, e.g. ['Solution', 'Drinking Water']")
+    department: Proposed = Field(description="The STORE's own department (not the Shopify category). "
+                                             "If you are not sure, value null and confidence low.")
+    category: Proposed = Field(description="The STORE's own category inside the department (not the Shopify "
+                                           "category). If you are not sure, value null and confidence low.")
+    subcategory: Proposed = Field(description="The STORE's own subcategory. If you are not sure, value null "
+                                              "and confidence low.")
+    product_types: Proposed = Field(description="LIST of short filter terms: uses, conditions treated, product format")
+
+
+# Model field -> store metafield it fills.
+MODEL_TO_METAFIELD = {
+    "ingredients": "info.ingredients",
+    "form": "info.form",
+    "department": "custom.department",
+    "category": "custom.category",
+    "subcategory": "custom.subcategory",
+    "product_types": "custom.product_types",
+}
+LIST_METAFIELDS = {"info.form", "custom.product_types"}
+# Better blank than wrong: kept only when the model is confident (and, once
+# metafields.yaml has an allowed list for them, the value is on that list).
+BLANK_IF_UNSURE = {"custom.department", "custom.category", "custom.subcategory"}
+
+
+def allowed_values() -> dict[str, list[str]]:
+    """{"custom.department": [...], ...} for every metafield with an `allowed:` list."""
+    data = yaml.safe_load((ROOT / "config/metafields.yaml").read_text(encoding="utf-8"))
+    out = {}
+    for entries in (data.get("shared", {}).get("product") or []), *(data.get("by_type") or {}).values():
+        for e in entries or []:
+            if e.get("allowed"):
+                out[f"{e['namespace']}.{e['key']}"] = list(e["allowed"])
+    return out
+
+
+def _choice(name: str, options: list[str], as_list: bool) -> type[BaseModel]:
+    """A Proposed variant whose value can only be one of `options` (a JSON-schema enum)."""
+    choice = Literal[tuple(options)]  # type: ignore[valid-type]
+    value_type = (list[choice] | None) if as_list else (choice | None)
+    return create_model(f"{name}_choice", __base__=Proposed, value=(value_type, Field(description="One of the allowed values")))
+
+
+def build_schema(category_names: list[str], allowed: dict[str, list[str]]) -> type[ModelListing]:
+    """The schema sent to the model for THIS product.
+
+    product_type may only be one of this product's category candidates, and any
+    field with an allowed list in metafields.yaml may only use those values.
+    With structured output the model then can't return anything else.
+    """
+    overrides = {"product_type": (_choice("product_type", category_names, as_list=False), ModelListing.model_fields["product_type"])}
+    for field, key in MODEL_TO_METAFIELD.items():
+        if key in allowed:
+            overrides[field] = (_choice(field, allowed[key], key in LIST_METAFIELDS), ModelListing.model_fields[field])
+    return create_model("ModelListing", __base__=ModelListing, **overrides)
 
 
 SYSTEM = """You turn supplier product data into a Shopify listing for an animal health retailer.
@@ -257,15 +309,19 @@ def map_row(row: InputRow, retriever: Retriever, model_fn: ModelFn = default_mod
     candidates = retrieved["categories"]
     examples = [h.metadata["json"] for h in retrieved["examples"]]
     prompt = build_prompt(row, candidates, guidance_rule_texts(), examples)
-    proposal: ModelListing = model_fn(prompt, ModelListing, SYSTEM)
+    allowed = allowed_values()
+    schema = build_schema([c["name"] for c in candidates], allowed)
+    proposal: ModelListing = model_fn(prompt, schema, SYSTEM)
 
     source_text = product_text(row)
 
-    def from_model(p: Proposed, rule_id: str | None = None, key: str = "") -> FieldValue:
+    def from_model(p: Proposed, rule_id: str | None = None, key: str = "", needs_quote: bool = True) -> FieldValue:
         """Turn a model proposal into a FieldValue, checking its evidence.
 
         - quote given but not in the supplier data -> confidence low + flag
         - no quote at all                           -> confidence at most medium
+          (skipped for classification fields like the store department, whose
+          names never appear in supplier text: needs_quote=False)
         - model itself says low                     -> flag for review
         """
         confidence = p.confidence
@@ -273,7 +329,7 @@ def map_row(row: InputRow, retriever: Retriever, model_fn: ModelFn = default_mod
             if p.quote and not quote_found(p.quote, source_text, threshold):
                 confidence = "low"
                 flags.append(f"{key}: quote not found in supplier data")
-            elif not p.quote and confidence == "high":
+            elif not p.quote and confidence == "high" and needs_quote:
                 confidence = "medium"
             elif confidence == "low":
                 flags.append(f"{key}: low confidence")
@@ -293,11 +349,24 @@ def map_row(row: InputRow, retriever: Retriever, model_fn: ModelFn = default_mod
     handle_value = slugify(title.value) if isinstance(title.value, str) else None
 
     mf = fields["metafields"]
-    for key, proposed in (("info.ingredients", proposal.ingredients), ("info.form", proposal.form),
-                          ("custom.department", proposal.department), ("custom.category", proposal.category),
-                          ("custom.product_types", proposal.product_types)):
-        if proposed.value not in (None, "", []):
-            mf[key] = from_model(proposed, key=key)
+    for field, key in MODEL_TO_METAFIELD.items():
+        proposed: Proposed = getattr(proposal, field)
+        if proposed.value in (None, "", []):
+            if key in BLANK_IF_UNSURE:
+                flags.append(f"{key}: left blank for review (model not sure)")
+            continue
+        value = from_model(proposed, key=key, needs_quote=key not in BLANK_IF_UNSURE)
+        if key in LIST_METAFIELDS and isinstance(value.value, str):
+            value.value = [value.value]                       # "Solution" -> ["Solution"]
+        elif key not in LIST_METAFIELDS and isinstance(value.value, list):
+            value.value = ", ".join(value.value)              # single-value field: ["A", "B"] -> "A, B"
+        if key in BLANK_IF_UNSURE:
+            off_list = key in allowed and value.value not in allowed[key]
+            if value.confidence != "high" or off_list:
+                reason = "not on the allowed list" if off_list else f"confidence {value.confidence}"
+                flags.append(f"{key}: left blank for review ({reason}; model proposed '{value.value}')")
+                continue
+        mf[key] = value
 
     draft = Draft(
         sku=row.sku,

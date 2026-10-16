@@ -30,10 +30,15 @@ def retriever():
 
 
 def fake_model(answer: dict):
-    """A stand-in for Gemini that always returns `answer`."""
+    """A stand-in for Gemini that always returns `answer`.
+
+    It validates against the plain ModelListing, ignoring the per-product enums,
+    like a provider that doesn't enforce them, so the code-side checks get tested.
+    """
     def model_fn(prompt, schema, system):
         model_fn.prompt = prompt
-        return schema.model_validate(answer)
+        model_fn.schema = schema
+        return mapper.ModelListing.model_validate(answer)
     return model_fn
 
 
@@ -47,8 +52,9 @@ GOOD_ANSWER = {
     "body_html": P("<p>Fast-acting swine treatment.</p>", "fast-acting solution"),
     "ingredients": P("12.5% tiamulin hydrogen fumarate", "Tiamulin Hydrogen Fumarate"),
     "form": P(["Solution", "Drinking Water"], "administration in drinking water"),
-    "department": P("Animal Health & Wellness", None, "medium"),
-    "category": P("Medicine", None, "medium"),
+    "department": P("Animal Health & Wellness", None, "high"),
+    "category": P("Medicine", None, "high"),
+    "subcategory": P(None, None, "low"),
     "product_types": P(["Pneumonia", "Diarrhea"], "swine pneumonia"),
 }
 
@@ -115,7 +121,9 @@ def test_map_row_builds_a_draft(vps6, retriever):
     assert draft.handle.value == GOLD["handle"]
     assert draft.product_type.value == "Animals & Pet Supplies"
     assert draft.metafields["info.form"].value == ["Solution", "Drinking Water"]
-    assert flags == []
+    assert draft.metafields["custom.department"].value == "Animal Health & Wellness"
+    assert "custom.subcategory" not in draft.metafields
+    assert flags == ["custom.subcategory: left blank for review (model not sure)"]
     # the prompt carries the candidates and only the guidance rules
     assert "Animals & Pet Supplies" in model.prompt
     assert "TITLE-01" in model.prompt and "TAX-01" in model.prompt
@@ -141,3 +149,50 @@ def test_model_cannot_change_fixed_rules(vps6, retriever):
     draft, _ = mapper.map_row(vps6, retriever, model_fn=fake_model(GOOD_ANSWER))
     assert draft.metafields["compliance.prop_65"].value is True
     assert draft.tags.value == GOLD["tags"]
+
+
+# ---- store hierarchy: better blank than wrong ------------------------------
+
+def test_unsure_department_is_left_blank(vps6, retriever):
+    answer = {**GOOD_ANSWER, "department": P("Animal Health", None, "medium")}
+    draft, flags = mapper.map_row(vps6, retriever, model_fn=fake_model(answer))
+    assert "custom.department" not in draft.metafields
+    assert any(f.startswith("custom.department: left blank") for f in flags)
+
+
+def test_confident_but_off_list_category_is_left_blank(vps6, retriever, monkeypatch):
+    monkeypatch.setattr(mapper, "allowed_values", lambda: {"custom.category": ["Medicine", "Supplements"]})
+    answer = {**GOOD_ANSWER, "category": P("Animals & Pet Supplies", None, "high")}
+    draft, flags = mapper.map_row(vps6, retriever, model_fn=fake_model(answer))
+    assert "custom.category" not in draft.metafields
+    assert any("not on the allowed list" in f for f in flags)
+
+
+def test_single_string_becomes_a_list(vps6, retriever):
+    answer = {**GOOD_ANSWER, "form": P("Liquid Concentrate", "drinking water")}
+    draft, _ = mapper.map_row(vps6, retriever, model_fn=fake_model(answer))
+    assert draft.metafields["info.form"].value == ["Liquid Concentrate"]
+
+
+# ---- the schema itself prevents invented values -----------------------------
+
+def test_schema_only_allows_candidate_categories():
+    schema = mapper.build_schema(["Animals & Pet Supplies", "Animals & Pet Supplies > Pet Supplies"], {})
+    ok = {**GOOD_ANSWER, "product_type": P("Animals & Pet Supplies")}
+    schema.model_validate(ok)
+    with pytest.raises(Exception):
+        schema.model_validate({**GOOD_ANSWER, "product_type": P("Swine Medication")})
+    assert "Swine Medication" not in json.dumps(schema.model_json_schema())
+
+
+def test_schema_uses_allowed_lists_for_list_fields():
+    schema = mapper.build_schema(["Animals & Pet Supplies"], {"info.form": ["Solution", "Drinking Water", "Tablet"]})
+    schema.model_validate({**GOOD_ANSWER, "form": P(["Solution", "Drinking Water"])})
+    with pytest.raises(Exception):
+        schema.model_validate({**GOOD_ANSWER, "form": P(["Liquid Concentrate"])})
+
+
+def test_list_answer_for_single_value_field_is_joined(vps6, retriever):
+    answer = {**GOOD_ANSWER, "ingredients": P(["Tiamulin Hydrogen Fumarate"], "Tiamulin Hydrogen Fumarate")}
+    draft, _ = mapper.map_row(vps6, retriever, model_fn=fake_model(answer))
+    assert draft.metafields["info.ingredients"].value == "Tiamulin Hydrogen Fumarate"
