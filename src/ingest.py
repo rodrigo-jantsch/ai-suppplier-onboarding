@@ -1,12 +1,11 @@
 """Stage 1: read a supplier CSV and turn each row into an InputRow.
 
-No LLM here: this is plain, testable code. The tests in tests/test_ingest.py
-describe exactly what each function must do. Work top to bottom:
+No LLM here: this is plain, testable code. Every supplier sends different
+column names and layouts; this stage's only job is to translate whatever they
+sent into one standard shape (InputRow) without losing anything.
 
-    python -m pytest -q tests/test_ingest.py
-
-Hints are in each docstring. Useful standard-library pieces: csv.DictReader,
-re.fullmatch / re.sub / re.findall.
+    python -m pytest -q tests/test_ingest.py     # run the tests
+    python -m src.ingest inbox/VPS6.csv           # see the result for a file
 """
 import csv
 import re
@@ -15,26 +14,35 @@ from pathlib import Path
 from src.config import load
 from src.schemas import InputRow
 
+# Fields that should become numbers rather than text.
+NUMBER_FIELDS = ("cost", "msrp", "weight_lb", "height", "length", "width")
+
+# Matches "Attribute12Name" and captures "12".
+ATTRIBUTE_NAME = re.compile(r"Attribute(\d+)Name")
+# Matches either half of an attribute pair, so map_columns can skip them.
+ATTRIBUTE_COLUMN = re.compile(r"Attribute\d+(Name|Value)")
+
 
 def normalize_header(header: str) -> str:
     """Make a header comparable to the aliases in config/input_schema.yaml.
 
-    Remove a byte-order mark ("\\ufeff") if present, trim, lowercase, and turn
-    any run of spaces/underscores into a single space.
         "\\ufeffAuction Title" -> "auction title"
         "  Item_#  "          -> "item #"
     """
-    raise NotImplementedError
+    h = header.replace("﻿", "")      # byte-order mark, if any
+    h = h.strip().lower()
+    return re.sub(r"[\s_]+", " ", h)      # any run of spaces/underscores -> one space
 
 
 def read_csv(path: Path) -> list[dict[str, str]]:
     """Read a CSV into a list of {column: value} dicts.
 
-    Hint: open with encoding="utf-8-sig" and newline="". The "-sig" variant
-    removes the invisible byte-order mark at the start of the VPS6 export, so
-    the first header is "Auction Title" instead of "\\ufeffAuction Title".
+    "utf-8-sig" removes the invisible byte-order mark some exports (like VPS6)
+    put at the very start of the file. newline="" lets the csv module handle
+    line breaks inside quoted cells, such as the multi-paragraph Description.
     """
-    raise NotImplementedError
+    with open(path, encoding="utf-8-sig", newline="") as f:
+        return [dict(row) for row in csv.DictReader(f)]
 
 
 def pivot_attributes(row: dict[str, str]) -> dict[str, str]:
@@ -43,52 +51,116 @@ def pivot_attributes(row: dict[str, str]) -> dict[str, str]:
         {"Attribute1Name": "Animal Type", "Attribute1Value": "Swine"}
         -> {"Animal Type": "Swine"}
 
-    Skip pairs whose Name is empty. Keep empty values (an empty
-    "Jeffers Prop 65 Validated" means something to PROP-01).
-    Hint: re.fullmatch(r"Attribute(\\d+)Name", key) gives you N.
+    Pairs with an empty name are skipped. Empty values are kept on purpose:
+    an empty "Jeffers Prop 65 Validated" means "not confirmed" to PROP-01.
     """
-    raise NotImplementedError
+    attributes = {}
+    for column, name in row.items():
+        match = ATTRIBUTE_NAME.fullmatch((column or "").strip())
+        if not match or not (name or "").strip():
+            continue
+        number = match.group(1)
+        value = row.get(f"Attribute{number}Value") or ""
+        attributes[name.strip()] = value.strip()
+    return attributes
 
 
 def map_columns(headers: list[str]) -> tuple[dict[str, str], list[str]]:
-    """Match CSV headers to standard fields using the aliases in input_schema.yaml.
+    """Match CSV headers to standard fields using input_schema.yaml aliases.
 
     Returns (mapping, unknown):
       mapping: {standard_field: original_header}, e.g. {"sku": "Inventory Number"}
-      unknown: headers that matched no alias (report these, don't crash)
-
-    Ignore the AttributeNName / AttributeNValue columns; pivot_attributes
-    handles those. Compare normalize_header(header) against normalized aliases.
-    If two headers match the same field, keep the first.
-    Hint: load("input_schema")["columns"] gives {field: {"aliases": [...]}}.
+      unknown: headers that matched no alias, so you can add them to the config
     """
-    raise NotImplementedError
+    columns = load("input_schema")["columns"]
+
+    # Build a lookup from every normalized alias to its standard field:
+    # {"inventory number": "sku", "retail price": "msrp", ...}
+    alias_to_field = {}
+    for field, spec in columns.items():
+        for alias in spec["aliases"]:
+            alias_to_field[normalize_header(alias)] = field
+
+    mapping, unknown = {}, []
+    for header in headers:
+        if not header or ATTRIBUTE_COLUMN.fullmatch(header.strip()):
+            continue                                  # pivot_attributes handles these
+        field = alias_to_field.get(normalize_header(header))
+        if field is None:
+            unknown.append(header)
+        elif field not in mapping:                    # first matching header wins
+            mapping[field] = header
+    return mapping, unknown
+
+
+def _to_number(text: str | None) -> float | None:
+    """'$1,024.50' -> 1024.5; empty or non-numeric -> None."""
+    if not text:
+        return None
+    try:
+        return float(text.replace("$", "").replace(",", "").strip())
+    except ValueError:
+        return None
+
+
+def _first_attribute(attributes: dict[str, str], names: list[str]) -> str | None:
+    """Return the first non-empty value among the listed attribute names."""
+    for name in names:
+        if attributes.get(name):
+            return attributes[name]
+    return None
+
+
+def _bullets(attributes: dict[str, str], prefix: str) -> list[str]:
+    """Collect 'Bullet Point 1..N' values in number order, skipping empties."""
+    numbered = []
+    for name, value in attributes.items():
+        if name.startswith(prefix) and value:
+            number = int(re.sub(r"\D", "", name) or 0)   # "Bullet Point 10" -> 10
+            numbered.append((number, value))
+    return [value for _, value in sorted(numbered)]
 
 
 def to_input_row(row: dict[str, str], mapping: dict[str, str], supplier: str) -> InputRow:
-    """Build one InputRow from a CSV row.
+    """Build one InputRow from a CSV row, using the column mapping."""
+    attribute_spec = load("input_schema")["attributes"]
+    attributes = pivot_attributes(row)
 
-    - Text fields: row[mapping[field]], stripped; empty string -> None.
-    - Numbers (cost, msrp, weight_lb, height, length, width): float, or None
-      if empty or not a number. Strip "$" and "," first.
-    - attributes: pivot_attributes(row).
-    - From attributes, using load("input_schema")["attributes"]:
-        size (only if no size column was mapped): first non-empty of the listed names
-        country_of_origin, animal_type: first non-empty of the listed names
-        bullets: values of "Bullet Point 1", "Bullet Point 2", ... in number order, skipping empties
-    - images: every https://... URL inside the images column.
-      Hint: re.findall(r"https?://[^,\\s]+", text)
-    - raw: the original row (drop the None key csv adds for extra commas).
-    """
-    raise NotImplementedError
+    # Read every mapped column: stripped text, empty string -> None.
+    values: dict = {}
+    for field, header in mapping.items():
+        text = (row.get(header) or "").strip()
+        values[field] = text or None
+
+    for field in NUMBER_FIELDS:
+        if field in values:
+            values[field] = _to_number(values[field])
+
+    # Some facts live in attributes rather than columns (as in VPS6).
+    if not values.get("size"):
+        values["size"] = _first_attribute(attributes, attribute_spec["size"])
+    values["country_of_origin"] = _first_attribute(attributes, attribute_spec["country_of_origin"])
+    values["animal_type"] = _first_attribute(attributes, attribute_spec["animal_type"])
+    values["bullets"] = _bullets(attributes, attribute_spec["bullets_prefix"])
+
+    # "ITEMIMAGEURL1=https://...jpg,ITEMIMAGEURL2=https://...jpg" -> list of URLs
+    values["images"] = re.findall(r"https?://[^,\s]+", values.get("images") or "")
+
+    return InputRow(
+        **values,
+        supplier=supplier,
+        attributes=attributes,
+        raw={k: v for k, v in row.items() if k is not None},   # csv uses None for extra cells
+    )
 
 
 def ingest_file(path: Path) -> tuple[list[InputRow], list[str]]:
-    """Read one supplier file and return (input_rows, unknown_headers).
-
-    supplier = the file name (path.name). Map headers once, then convert each row.
-    """
-    raise NotImplementedError
+    """Read one supplier file and return (input_rows, unknown_headers)."""
+    rows = read_csv(path)
+    if not rows:
+        return [], []
+    mapping, unknown = map_columns(list(rows[0].keys()))   # headers are the same for every row
+    return [to_input_row(row, mapping, path.name) for row in rows], unknown
 
 
 if __name__ == "__main__":
