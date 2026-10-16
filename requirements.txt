@@ -13,3 +13,4 @@ trafilatura>=1.12
 playwright>=1.45
 rapidfuzz>=3.9
 streamlit>=1.38
+pytest>=8.0

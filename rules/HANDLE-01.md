@@ -1,7 +1,7 @@
 id: HANDLE-01
-title: Product Handle format
-trigger: Every product
+title: Product handle format
 kind: deterministic
-action: Handle = "<Product title>"; all lower case with blank space replaced with -, and special characters are removed. Replace any run of non-letters/digits with one hyphen
-example: "acme-flea-tick-spray-for-dogs-16-oz"
-reason: Consistent handle help search and collection pages.
+trigger: Every product
+action: Handle is generated from the Title: lowercase, then replace any run of characters that are not letters or digits with a single hyphen, and trim hyphens from both ends.
+example: "TiaGard® 12.5% (tiamulin hydrogen fumarate) Liquid Concentrate for Swine Dysentery & Pneumonia Treatment" -> "tiagard-12-5-tiamulin-hydrogen-fumarate-liquid-concentrate-for-swine-dysentery-pneumonia-treatment"
+reason: Consistent handles help search and collection pages.

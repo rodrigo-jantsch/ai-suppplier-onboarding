@@ -1,30 +1,52 @@
-# The standard input every supplier CSV is mapped to.
-# `aliases` are lowercase column names seen in supplier files.
-# When a new supplier sends an unknown header, ingest.py asks the LLM once
-# and you add the confirmed answer here.
+# The standard input every supplier CSV is mapped to (src/schemas.py InputRow).
+#
+# columns:    real CSV columns. `aliases` are compared after normalizing headers
+#             (lowercase, trimmed, runs of spaces/underscores -> one space),
+#             so "Item #", "item_#" and "ITEM #" all match "item #".
+# attributes: name/value pairs from AttributeNName / AttributeNValue columns.
+#             ingest.py turns those pairs into a dict first, then maps them here.
+#
+# When a supplier sends an unknown header, ingest.py lists it; add the confirmed
+# alias here (later: the LLM proposes one and you approve it).
 
-fields:
+columns:
   sku:
     required: true
-    aliases: [sku, supplier_sku, item_no, "item #", item_number, part_no]
+    aliases: [sku, supplier sku, item no, "item #", item number, part no, inventory number]
   upc:
-    required: false
-    aliases: [upc, upc_code, gtin, barcode, ean]
+    aliases: [upc, upc code, gtin, barcode, ean]
   brand:
-    required: false
-    aliases: [brand, mfr, manufacturer, vendor]
+    aliases: [brand]
+  manufacturer:
+    aliases: [manufacturer, mfr, vendor]
   name:
     required: true
-    aliases: [name, item_name, product_name, description_short, title]
+    aliases: [name, item name, product name, title, auction title]
+  short_description:
+    aliases: [short description, description short]
   description:
-    required: false
-    aliases: [desc, description, long_desc, features]
+    aliases: [desc, description, long desc, features]
   size:
-    required: false
-    aliases: [size, pack_size, unit_size, net_wt, net_weight]
+    aliases: [size, pack size, unit size, net wt, net weight]
   cost:
-    required: false
-    aliases: [cost, unit_cost, wholesale, dealer_cost]
+    aliases: [cost, unit cost, wholesale, dealer cost]
   msrp:
-    required: false
-    aliases: [msrp, retail, srp, list_price]
+    aliases: [msrp, retail, srp, list price, retail price]
+  weight_lb:
+    aliases: [weight, weight lb, shipping weight]
+  height:
+    aliases: [height]
+  length:
+    aliases: [length]
+  width:
+    aliases: [width]
+  parent_sku:
+    aliases: [variation parent sku, parent sku, parent item number]
+  images:
+    aliases: [picture urls, image urls, images]
+
+attributes:
+  size: [Jeffers Size, Size]            # first non-empty wins
+  country_of_origin: [Country/Region of Manufacturer]
+  animal_type: [Animal Type]
+  bullets_prefix: "Bullet Point"        # Bullet Point 1..N -> bullets list, in order

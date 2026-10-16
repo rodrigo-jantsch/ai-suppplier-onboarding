@@ -1,7 +1,7 @@
 id: BIO-01
-title: Vaccines
+title: Biologicals (vaccines)
 kind: deterministic
-trigger: Product has a requires refrigeration or biologican identification in the incoming CSV.
-action: custom.biological=true; add tag "GMC: Vaccine Shipping";, status = needs review;
-reason: Vaccine has to be shipped with Ice pack and coolers.
+trigger: Supplier attribute "Jeffers Is Biological" = Y
+action: variant custom.biological = true; add tag "GMC: Vaccine Shipping"; status = needs review
+reason: Biologicals ship with ice packs and coolers.
 note: Illustrative rule for this project, not legal guidance.

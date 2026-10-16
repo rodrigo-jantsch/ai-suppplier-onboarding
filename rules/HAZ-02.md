@@ -1,7 +1,7 @@
 id: HAZ-02
-title: HAZ shipping restriction
+title: Hazardous shipping restriction
 kind: deterministic
-trigger: Product has a hazardous identification in the incoming CSV.
-action: custom.hazardous = true
-reason: Haz have shipping restrictions
+trigger: Supplier attribute "Jeffers Is Hazardous" = Y (also check "Is DOT/ORMD" = Y for variant custom.ormd)
+action: variant custom.hazardous = true; if "Is DOT/ORMD" = Y then variant custom.ormd = true
+reason: Hazardous items have shipping restrictions.
 note: Illustrative rule for this project, not legal guidance.

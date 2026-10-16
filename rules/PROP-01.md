@@ -1,7 +1,7 @@
 id: PROP-01
 title: Proposition 65
 kind: deterministic
-trigger: Incoming CSV has two columns. One that is Confirmed Prop 65 and another that is Prop65 itself.  
-action: if confirmed = true, the value of compliance.prop_65= prop65 value, otherwise compliance.prop_65 = true. If value is true, Metafield: shopify.disclosure [list.disclosure_reference]=  ["gid://shopify/Metaobject/238268514493"]
-reason: Compliance fields required in CA.
+trigger: Every product; reads supplier attributes "Jeffers Is Prop 65" (value) and "Jeffers Prop 65 Validated" (confirmed)
+action: If "Jeffers Prop 65 Validated" is Y, compliance.prop_65 = value of "Jeffers Is Prop 65" (1/Y -> true, 0/N -> false). Otherwise compliance.prop_65 = true. When compliance.prop_65 is true, set shopify.disclosure = ["gid://shopify/Metaobject/238268514493"].
+reason: Compliance fields required in CA; unconfirmed items default to showing the warning.
 note: Illustrative rule for this project, not legal guidance.
