@@ -1,20 +1,39 @@
-# 2-3 retailer sites to look up products on.
-# Before adding a site: open https://<site>/robots.txt and confirm product and
-# search pages aren't disallowed, and read the site's terms of use.
-# Fill these in during Weekend 1; leave enabled: false until checked.
+# Retailer sites to look products up on. A site is used only when
+# enabled: true AND robots_checked: true.
+#
+# find_by:
+#   sitemap  download the product sitemap once (cached a week) and search its
+#            URLs locally. Polite, and works when search needs JavaScript.
+#   search   fetch search_url and take product links from the results HTML.
+#
+# Before enabling a site: read https://<site>/robots.txt and the site's terms
+# of use, and note what you found below. The code also checks robots.txt on
+# every request and never fetches a disallowed URL.
 
 sites:
-  - name: competitor_a
+  - name: valleyvet
     base_url: "https://www.valleyvet.com/"
-    search_url: "https://www.valleyvet.com/shop/?search_query=={query}"
-    product_path_hint: "/"   # helps spot product URLs in search results
-    is_shopify: false                 # true -> also try /products/<handle>.json
-    robots_checked: false
-    enabled: false
-  - name: competitor_b
+    find_by: sitemap
+    sitemap_url: "https://www.valleyvet.com/xmlsitemap.php"   # an index; product sitemaps are followed
+    sitemap_filter: "type=products"
+    search_url: "https://www.valleyvet.com/shop/?search_query={query}"   # results load with JavaScript, so not used
+    robots_checked: true    # 2026-10-19: product pages allowed; /search.php and filtered listings disallowed
+    enabled: true
+
+  - name: chewy
     base_url: "https://www.chewy.com/"
+    find_by: search
     search_url: "https://www.chewy.com/s?query={query}"
-    product_path_hint: "/"
-    is_shopify: false
-    robots_checked: false
-    enabled: false
+    product_path_hint: "/dp/"
+    robots_checked: true    # 2026-10-19: "Disallow: *query=*" forbids search; product pages (/dp/) allowed
+    enabled: false          # no allowed way to find product URLs; replace with another competitor
+
+  - name: tractorsupply
+    base_url: "https://www.tractorsupply.com/"
+    find_by: sitemap
+    sitemap_url: "https://www.tractorsupply.com/sitemap.xml"    # an index of 9; we follow sitemap_product_1..4.xml
+    sitemap_filter: "sitemap_product"
+    search_url: "https://www.tractorsupply.com/tsc/search/{query}"   # disallowed by robots.txt, so not used
+    product_path_hint: "/tsc/product/"
+    robots_checked: true    # 2026-10-19: "Disallow: /tsc/search*"; /tsc/product/ allowed; Crawl-delay: 1
+    enabled: true

@@ -98,3 +98,18 @@ def test_append_result_adds_new_columns(tmp_path):
     lines = out.read_text().splitlines()
     assert lines[0] == "timestamp,overall_score,note,label_precision"
     assert lines[1] == "t1,80,old," and lines[2] == "t2,85,new,90.0"
+
+
+def test_competitor_scores():
+    gold = {"sku": "X1", "expected_draft": {"metafields": {"custom.sizes": ["1 L"], "custom.animal": ["Swine"]}},
+            "expected_matches": {"valleyvet": "https://vv.com/tiagard/", "other": "https://o.com/right/"}}
+    report = {"sites": [
+        {"site": "valleyvet", "matched_url": "https://vv.com/tiagard", "facts": {
+            "custom.sizes": {"value": "1 Liter", "quote": "Size: 1 Liter"},
+            "custom.animal": {"value": ["Cattle"], "quote": "for cattle"},
+            "info.form": {"value": ["Liquid"], "quote": "liquid"}}},          # suggest-only: not scored
+        {"site": "other", "matched_url": "https://o.com/wrong/", "facts": {}},
+        {"site": "none", "matched_url": None}]}
+    s = ev.score_competitors(gold, report)
+    assert (s["matched"], s["match_checked"], s["match_correct"]) == (2, 2, 1)
+    assert (s["facts"], s["facts_correct"]) == (2, 1)

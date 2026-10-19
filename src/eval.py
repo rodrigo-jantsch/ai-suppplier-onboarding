@@ -21,6 +21,12 @@ If the image check has run (output/images/<sku>.json), two more numbers:
     wrong images caught   images gold marks "no" that the check flagged
     label-read precision  values read from labels that agree with gold
 
+If the competitor lookup has run (output/competitors/<sku>.json):
+
+    match precision       matched pages that are the right product
+                          (gold "expected_matches": {"valleyvet": "<url>"})
+    fact precision        facts taken from pages that agree with gold
+
 Each run appends one line to results.csv, so you can compare runs over time.
 """
 import argparse
@@ -203,7 +209,28 @@ def score_images(gold: dict, report: dict) -> dict:
             if mode != "compare" or v["value"] in (None, "", []) or v["confidence"] == "low" or key not in truth:
                 continue
             out["label_values"] += 1
-            out["label_correct"] += agrees(key, truth[key], v["value"])
+            out["label_correct"] += agrees(key, truth[key], v["value"], v.get("label_text"))
+    return out
+
+
+def score_competitors(gold: dict, report: dict) -> dict:
+    """Compare a competitor report (output/competitors/<sku>.json) with the gold label."""
+    from src.evidence import MODES, agrees
+
+    expected = gold.get("expected_matches", {})
+    truth = {**gold["expected_draft"].get("metafields", {}), **gold.get("findable_facts", {})}
+    out = {"matched": 0, "match_checked": 0, "match_correct": 0, "facts": 0, "facts_correct": 0}
+    for site in report.get("sites", []):
+        if not site.get("matched_url"):
+            continue
+        out["matched"] += 1
+        if site["site"] in expected:
+            out["match_checked"] += 1
+            out["match_correct"] += site["matched_url"].rstrip("/") == (expected[site["site"]] or "").rstrip("/")
+        for key, v in (site.get("facts") or {}).items():
+            if MODES.get(key) == "compare" and key in truth:
+                out["facts"] += 1
+                out["facts_correct"] += agrees(key, truth[key], v["value"], v.get("quote"))
     return out
 
 
@@ -229,7 +256,7 @@ def main() -> None:
     parser.add_argument("--all", action="store_true", help="print every field, not just the imperfect ones")
     args = parser.parse_args()
 
-    all_results, flag_checks, scored, skipped, image_scores = [], [], [], [], []
+    all_results, flag_checks, scored, skipped, image_scores, comp_scores = [], [], [], [], [], []
     for gold_path in sorted((ROOT / "gold").glob("*.json")):
         if gold_path.name.startswith("_"):
             continue
@@ -242,6 +269,9 @@ def main() -> None:
         image_path = ROOT / "output" / "images" / f"{gold['sku']}.json"
         if image_path.exists():
             image_scores.append(score_images(gold, json.loads(image_path.read_text(encoding="utf-8"))))
+        comp_path = ROOT / "output" / "competitors" / f"{gold['sku']}.json"
+        if comp_path.exists():
+            comp_scores.append(score_competitors(gold, json.loads(comp_path.read_text(encoding="utf-8"))))
         all_results += results
         flag_checks.append(flag_check)
         scored.append(gold["sku"])
@@ -292,6 +322,15 @@ Image check ({len(image_scores)} SKU(s), {t['images']} images)
   label-read precision  {precision}%   ({t['label_correct']}/{t['label_values']} values agree with gold)""")
         row.update({"images": t["images"], "wrong_images_caught": caught,
                     "image_false_alarms": t["false_alarms"], "label_precision": precision})
+    if comp_scores:
+        t = {k: sum(x[k] for x in comp_scores) for k in comp_scores[0]}
+        fact_precision = round(100 * t["facts_correct"] / t["facts"], 1) if t["facts"] else None
+        matches = f"{t['match_correct']}/{t['match_checked']}"
+        print(f"""
+Competitor lookup ({len(comp_scores)} SKU(s), {t['matched']} matched page(s))
+  match precision       {matches}   (matched pages that gold confirms; add "expected_matches" to gold)
+  fact precision        {fact_precision}%   ({t['facts_correct']}/{t['facts']} facts agree with gold)""")
+        row.update({"competitor_pages": t["matched"], "match_precision": matches, "fact_precision": fact_precision})
     row["note"] = args.note
 
     out = ROOT / "results.csv"

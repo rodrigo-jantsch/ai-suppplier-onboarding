@@ -26,6 +26,7 @@ enrichment:
   max_sites: 3
   seconds_per_sku: 60
   request_delay_seconds: 3
+  timeout_seconds: 20         # per web request
 
 validation:
   quote_match_threshold: 90    # rapidfuzz score (0-100)

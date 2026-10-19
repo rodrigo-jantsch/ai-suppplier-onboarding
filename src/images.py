@@ -30,8 +30,9 @@ from rapidfuzz import fuzz
 
 from src import llm
 from src.config import ROOT, settings
-from src.map import normalize_size
-from src.schemas import Draft, FieldValue, InputRow, Source, Suggestion
+from src.evidence import (Evidence, adds_detail, agrees, apply_evidence, as_list, norm,  # noqa: F401
+                          numbers, numbers_in_quote, remove_previous, size_variants)
+from src.schemas import Draft, InputRow, Source
 
 TAG = "[image check]"          # marks flags this step adds, so a re-run replaces them
 
@@ -51,22 +52,22 @@ class ImageReading(BaseModel):
     reason: str = Field(description="One short sentence: what in the image supports that answer")
     brand: LabelValue = Field(description="Brand name printed on the package")
     size: LabelValue = Field(description="Net contents, e.g. '1 L', '16 oz', '60 count'")
-    ingredients: LabelValue = Field(description="Active ingredient(s) WITH strength, e.g. '12.5% tiamulin hydrogen fumarate'")
+    ingredients: LabelValue = Field(
+        description="Active ingredient(s) WITH the strength or concentration printed with them, e.g. "
+                    "'12.5% tiamulin hydrogen fumarate'. Look across the whole label (product name line, "
+                    "'Active Ingredient' section) for the percentage or mg amount; leave it out only if "
+                    "none is printed.")
     species: LabelValue = Field(description="LIST of animals the label says the product is for, e.g. ['Swine']")
     form: LabelValue = Field(description="LIST: product form as printed, e.g. ['Liquid Concentrate']")
 
 
-# Label field -> draft metafield, and how the two are compared.
-#   compare: a value on both sides is checked; disagreement is flagged
-#   suggest: only used to fill an empty field (the label's wording, like
-#            "Liquid Concentrate", rarely matches the store's filter terms)
+# Label field -> (draft metafield, how it's compared; see src/evidence.py)
 FIELDS = {
     "size": ("custom.sizes", "compare"),
     "ingredients": ("info.ingredients", "compare"),
     "species": ("custom.animal", "compare"),
     "form": ("info.form", "suggest"),
 }
-LIST_FIELDS = {"custom.sizes", "custom.animal", "info.form"}
 
 SYSTEM = """You read product packaging photos for an animal health retailer.
 Report only what is printed and visible in the image. Never use outside knowledge and never guess.
@@ -112,53 +113,9 @@ def image_name(url: str) -> str:
 
 # ====================================================================== checks in code
 
-def numbers(text) -> set[str]:
-    """Every number in a value: '12.5% tiamulin' -> {'12.5'}; ['1 L'] -> {'1'}."""
-    if isinstance(text, list):
-        text = " ".join(text)
-    return {f"{float(n):g}" for n in re.findall(r"\d+(?:\.\d+)?", str(text or ""))}
-
-
-def as_list(value) -> list[str]:
-    if value in (None, "", []):
-        return []
-    return [str(v) for v in value] if isinstance(value, list) else [str(value)]
-
-
-def norm(text: str) -> str:
-    return re.sub(r"\s+", " ", str(text).replace("®", "").replace("™", "").casefold()).strip()
-
-
-def size_variants(text: str) -> set[str]:
-    """'1 Liter (33.8 fl oz)' -> {'1 L', '33.8 oz', ...}: every amount printed, normalized."""
-    found = {normalize_size(text)}
-    for amount in re.findall(r"\d+(?:\.\d+)?\s*[a-zA-Z][a-zA-Z. ]*?(?=[\s,()/]|$)", text):
-        found.add(normalize_size(amount))
-    return found
-
-
-def agrees(key: str, draft_value, image_value) -> bool:
-    if key == "custom.sizes":
-        printed = set().union(*(size_variants(v) for v in as_list(image_value))) if as_list(image_value) else set()
-        return {normalize_size(v) for v in as_list(draft_value)} <= printed
-    if key == "info.ingredients":
-        same_numbers = numbers(draft_value) == numbers(image_value)
-        return same_numbers and fuzz.token_set_ratio(norm(draft_value), norm(image_value)) >= 80
-    # lists of names (species): agree if they share any entry
-    return bool({norm(v) for v in as_list(draft_value)} & {norm(v) for v in as_list(image_value)})
-
-
-def adds_detail(key: str, draft_value, image_value) -> bool:
-    """The label says the same thing plus a strength the draft is missing:
-    draft 'Tiamulin Hydrogen Fumarate', label '12.5% tiamulin hydrogen fumarate'."""
-    if key != "info.ingredients" or numbers(draft_value) or not numbers(image_value):
-        return False
-    return fuzz.token_set_ratio(norm(draft_value), norm(image_value)) >= 80
-
-
 def grounded(value: LabelValue) -> bool:
     """Every number in the value must be printed in the label text the model quoted."""
-    return numbers(value.value) <= numbers(value.label_text)
+    return numbers_in_quote(value.value, value.label_text)
 
 
 def same_brand(row: InputRow, brand: LabelValue) -> bool:
@@ -187,15 +144,11 @@ def check_images(row: InputRow, draft: Draft, flags: list[str],
     Running it twice gives the same result: earlier image sources and flags are
     removed first.
     """
-    # Start clean, so re-running doesn't duplicate anything.
-    flags[:] = [f for f in flags if not f.endswith(TAG)]
-    for fv in draft.metafields.values():
-        fv.sources = [s for s in fv.sources if s.kind != "image"]
+    remove_previous(draft, flags, kind="image", tag=TAG)
 
     max_images = settings().get("images", {}).get("max_per_product", 3)
     folder = ROOT / "cache" / "images" / row.sku
-    new_flags, readings, found = [], [], {}        # found: key -> {normalized value: [(value, Source, conf)]}
-    current_of = {}                                # key -> draft value the suggestion would replace
+    new_flags, readings, evidence = [], [], []
 
     for url in row.images[:max_images]:
         name = image_name(url)
@@ -219,7 +172,7 @@ def check_images(row: InputRow, draft: Draft, flags: list[str],
         if verdict == "unsure":
             continue                                # e.g. a lifestyle photo with no label: not used
 
-        for field, (key, mode) in FIELDS.items():
+        for field, (key, _) in FIELDS.items():
             value: LabelValue = getattr(reading, field)
             if value.value in (None, "", []) or value.confidence == "low":
                 continue
@@ -227,51 +180,13 @@ def check_images(row: InputRow, draft: Draft, flags: list[str],
                 new_flags.append(f"{key}: image {name} gave '{value.value}' but the label text it quoted "
                                  f"doesn't show those numbers; ignored {TAG}")
                 continue
-            confidence = value.confidence if value.label_text else "medium"
-            source = Source(kind="image", ref=name, url=url, quote=value.label_text)
-            current = draft.metafields.get(key)
+            evidence.append(Evidence(
+                key=key, value=value.value, quote=value.label_text,
+                confidence=value.confidence if value.label_text else "medium",
+                source=Source(kind="image", ref=name, url=url, quote=value.label_text)))
 
-            if current is not None and current.value not in (None, "", []):
-                if mode != "compare":
-                    continue
-                if agrees(key, current.value, value.value):
-                    current.sources.append(source)
-                    if current.confidence == "medium":
-                        current.confidence = "high"     # two independent sources agree
-                    elif current.confidence == "low":
-                        current.confidence = "medium"
-                elif adds_detail(key, current.value, value.value):
-                    current_of[key] = current.value     # same thing, more complete: suggest an upgrade
-                    normalized = tuple(sorted(norm(v) for v in as_list(value.value)))
-                    found.setdefault(key, {}).setdefault(normalized, []).append((value.value, source, confidence))
-                else:
-                    new_flags.append(f"{key}: image {name} says '{value.value}', draft says "
-                                     f"'{current.value}' {TAG}")
-            else:
-                normalized = tuple(sorted(norm(v) for v in as_list(value.value)))
-                found.setdefault(key, {}).setdefault(normalized, []).append((value.value, source, confidence))
-
-    # Empty draft fields: one suggestion per distinct value; several images agreeing count up.
-    suggestions = []
-    for key, by_value in found.items():
-        if len(by_value) > 1:
-            new_flags.append(f"{key}: images disagree on this value; see suggestions {TAG}")
-        for entries in by_value.values():
-            value, _, confidence = entries[0]
-            if key in LIST_FIELDS and isinstance(value, str):
-                value = [value]
-            elif key not in LIST_FIELDS and isinstance(value, list):
-                value = ", ".join(value)
-            files = ", ".join(s.ref for _, s, _ in entries)
-            suggestions.append(Suggestion(
-                field=key,
-                proposed=FieldValue(value=value, sources=[s for _, s, _ in entries], confidence=confidence),
-                current=current_of.get(key),
-                agreement=len(entries),
-                reason=(f"The label ({files}) adds detail the draft is missing" if key in current_of
-                        else f"Read from the supplier's image ({files}); the draft has no value"),
-            ))
-
+    suggestions, compare_flags = apply_evidence(draft, evidence, TAG)
+    new_flags += compare_flags
     flags.extend(new_flags)
     return {"sku": row.sku, "images": readings, "suggestions": [s.model_dump() for s in suggestions],
             "flags": new_flags}

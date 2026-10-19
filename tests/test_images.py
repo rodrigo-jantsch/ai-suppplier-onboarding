@@ -78,6 +78,9 @@ def test_image_name():
 @pytest.mark.parametrize("draft_value, image_value, expected", [
     (["1 L"], "1 Liter (33.8 fl oz)", True),
     (["1 L"], "1 gal", False),
+    (["1 L"], "One Liter", True),                                  # the real VPS6 label
+    (["1 L"], "1000 mL", True),
+    (["16 oz"], "16 fl. oz", True),
     ("12.5% tiamulin hydrogen fumarate", "Tiamulin Hydrogen Fumarate 12.5%", True),
     ("12.5% tiamulin hydrogen fumarate", "1.25% tiamulin hydrogen fumarate", False),   # misread strength
 ])
@@ -199,3 +202,9 @@ def test_label_that_adds_the_strength_is_an_upgrade_suggestion(vps6, draft):
     assert s["field"] == "info.ingredients" and s["current"] == "Tiamulin Hydrogen Fumarate"
     assert s["proposed"]["value"] == "12.5% tiamulin hydrogen fumarate" and s["agreement"] == 2
     assert not any(f.startswith("info.ingredients") for f in flags)          # not a conflict
+
+
+def test_size_read_from_the_real_label_agrees():
+    # What Gemini actually returned for VPS6-MAIN.jpg
+    assert im.agrees("custom.sizes", ["1 L"], "One Liter", "One Liter (1.057 Quarts) (33.8 fl. oz; 1000 mL)")
+    assert not im.agrees("custom.sizes", ["2 L"], "One Liter", "One Liter (1.057 Quarts) (33.8 fl. oz; 1000 mL)")
