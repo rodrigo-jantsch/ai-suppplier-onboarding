@@ -71,3 +71,30 @@ def test_handle_is_judged_against_the_drafts_own_title():
     bad = {"draft": {"title": {"value": "New Title"}, "handle": {"value": "something-else"}}, "flags": []}
     assert {r.field: r.outcome for r in ev.score_sku(gold, good)[0]}["handle"] == "correct"
     assert {r.field: r.outcome for r in ev.score_sku(gold, bad)[0]}["handle"] == "wrong"
+
+
+def test_image_scores():
+    gold = {"sku": "X1", "expected_draft": {"metafields": {"custom.sizes": ["1 L"]}},
+            "findable_facts": {"info.ingredients": "12.5% tiamulin hydrogen fumarate"},
+            "expected_images": {"MAIN.jpg": "yes", "WRONG.jpg": "no", "BACK.jpg": "yes"}}
+
+    def img(file, verdict, size, ingredients=None):
+        lv = lambda v: {"value": v, "label_text": v, "confidence": "high"}   # noqa: E731
+        return {"file": file, "verdict": verdict, "reading": {
+            "size": lv(size), "ingredients": lv(ingredients), "species": lv(None), "form": lv("Liquid")}}
+
+    report = {"images": [img("MAIN.jpg", "yes", "1 Liter (33.8 fl oz)", "Tiamulin hydrogen fumarate 12.5%"),
+                         img("WRONG.jpg", "no", "16 oz"),
+                         img("BACK.jpg", "no", "1 L")]}          # a correct image wrongly rejected
+    s = ev.score_images(gold, report)
+    assert (s["wrong_planted"], s["wrong_caught"], s["false_alarms"]) == (1, 1, 1)
+    assert (s["label_values"], s["label_correct"]) == (2, 2)    # form is not scored; rejected images skipped
+
+
+def test_append_result_adds_new_columns(tmp_path):
+    out = tmp_path / "results.csv"
+    ev.append_result(out, {"timestamp": "t1", "overall_score": 80, "note": "old"})
+    ev.append_result(out, {"timestamp": "t2", "overall_score": 85, "label_precision": 90.0, "note": "new"})
+    lines = out.read_text().splitlines()
+    assert lines[0] == "timestamp,overall_score,note,label_precision"
+    assert lines[1] == "t1,80,old," and lines[2] == "t2,85,new,90.0"

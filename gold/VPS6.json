@@ -39,5 +39,6 @@
    
   },
   "expected_flags": [],
+  "expected_images": {"VPS6-MAIN.jpg": "yes", "VPS6-BACK.jpg": "yes"},
   "notes": "Source: Shopify product 15407190147261 / variant 67664339665085 (handle tiagard-f-style), pulled 2026-10-12. Metafield keys match the store schema; variant_metafields are owned by the variant. info.ingredients cleaned of its 'Active Ingredient:' prefix. Weight is the variant weight, not a metafield."
 }

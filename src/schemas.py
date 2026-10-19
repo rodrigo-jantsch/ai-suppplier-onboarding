@@ -42,10 +42,10 @@ class InputRow(BaseModel):
 
 
 class Source(BaseModel):
-    kind: Literal["csv", "rule", "example", "competitor"]
-    ref: str = Field(description="CSV column name, rule id, example sku, or competitor name")
+    kind: Literal["csv", "rule", "example", "competitor", "image"]
+    ref: str = Field(description="CSV column name, rule id, example sku, competitor name, or image file name")
     url: str | None = None
-    quote: str | None = Field(default=None, description="Exact text copied from the CSV cell or page")
+    quote: str | None = Field(default=None, description="Exact text copied from the CSV cell, page, or product label")
 
 
 class FieldValue(BaseModel):
@@ -71,11 +71,11 @@ class Draft(BaseModel):
 
 
 class Suggestion(BaseModel):
-    """Stage 3 output: from competitor pages, needs human approval."""
+    """Stage 3 output: from product images or competitor pages, needs human approval."""
     field: str
     proposed: FieldValue
     current: Value = None
-    agreement: int = Field(description="How many competitors agree on this value")
+    agreement: int = Field(description="How many sources (images or competitor pages) agree on this value")
     reason: str
 
 

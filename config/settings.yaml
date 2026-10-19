@@ -17,6 +17,10 @@ retrieval:
   examples_top_k: 3
   rrf_k: 60
 
+images:
+  max_per_product: 3           # product images read per SKU (one model call each)
+  download_timeout_seconds: 20
+
 enrichment:
   max_tool_calls: 12
   max_sites: 3

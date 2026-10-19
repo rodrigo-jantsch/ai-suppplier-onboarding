@@ -1,6 +1,7 @@
 """Score saved drafts against the gold labels.
 
     python -m src.map inbox/VPS6.csv          # make drafts (calls Gemini)
+    python -m src.images inbox/VPS6.csv       # optional: check product images
     python -m src.eval --note "baseline"      # score them (no API calls)
 
 For every gold label in gold/, finds output/drafts/<sku>.json and compares
@@ -14,6 +15,11 @@ field by field. Each field gets one outcome:
 
 The number that matters most for trust is "silent errors": wrong values that
 were not flagged. Those are what would reach the store without anyone looking.
+
+If the image check has run (output/images/<sku>.json), two more numbers:
+
+    wrong images caught   images gold marks "no" that the check flagged
+    label-read precision  values read from labels that agree with gold
 
 Each run appends one line to results.csv, so you can compare runs over time.
 """
@@ -166,6 +172,55 @@ def summarize(results: list[FieldResult]) -> dict:
     }
 
 
+# ------------------------------------------------------------------ image check
+
+def score_images(gold: dict, report: dict) -> dict:
+    """Compare an image-check report (output/images/<sku>.json) with the gold label.
+
+    gold["expected_images"] = {"VPS6-MAIN.jpg": "yes", "OTHER.jpg": "no"} says
+    which images really show the product. Label values are judged the same
+    way the image check compares them, on the fields it compares.
+    """
+    from src.images import FIELDS, agrees
+
+    expected = gold.get("expected_images", {})
+    truth = {**gold["expected_draft"].get("metafields", {}), **gold.get("findable_facts", {})}
+    out = {"images": 0, "wrong_planted": 0, "wrong_caught": 0, "false_alarms": 0, "label_values": 0, "label_correct": 0}
+    for img in report.get("images", []):
+        if "error" in img:
+            continue
+        out["images"] += 1
+        verdict, should_be = img["verdict"], expected.get(img["file"])
+        if should_be == "no":
+            out["wrong_planted"] += 1
+            out["wrong_caught"] += verdict == "no"
+        elif should_be == "yes" and verdict == "no":
+            out["false_alarms"] += 1
+        if verdict != "yes":
+            continue
+        for field, (key, mode) in FIELDS.items():
+            v = img["reading"][field]
+            if mode != "compare" or v["value"] in (None, "", []) or v["confidence"] == "low" or key not in truth:
+                continue
+            out["label_values"] += 1
+            out["label_correct"] += agrees(key, truth[key], v["value"])
+    return out
+
+
+def append_result(path: Path, row: dict) -> None:
+    """Append one run to results.csv, adding any new columns to the header."""
+    rows = []
+    if path.exists():
+        with open(path, newline="", encoding="utf-8") as f:
+            rows = list(csv.DictReader(f))
+    columns = list(rows[0].keys()) if rows else []
+    columns += [c for c in row if c not in columns]
+    with open(path, "w", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, fieldnames=columns)
+        w.writeheader()
+        w.writerows(rows + [row])
+
+
 # ------------------------------------------------------------------ main
 
 def main() -> None:
@@ -174,7 +229,7 @@ def main() -> None:
     parser.add_argument("--all", action="store_true", help="print every field, not just the imperfect ones")
     args = parser.parse_args()
 
-    all_results, flag_checks, scored, skipped = [], [], [], []
+    all_results, flag_checks, scored, skipped, image_scores = [], [], [], [], []
     for gold_path in sorted((ROOT / "gold").glob("*.json")):
         if gold_path.name.startswith("_"):
             continue
@@ -184,6 +239,9 @@ def main() -> None:
             skipped.append(gold["sku"])
             continue
         results, flag_check = score_sku(gold, json.loads(draft_path.read_text(encoding="utf-8")))
+        image_path = ROOT / "output" / "images" / f"{gold['sku']}.json"
+        if image_path.exists():
+            image_scores.append(score_images(gold, json.loads(image_path.read_text(encoding="utf-8"))))
         all_results += results
         flag_checks.append(flag_check)
         scored.append(gold["sku"])
@@ -218,16 +276,26 @@ Summary
   wrong, NOT flagged  {s['silent_errors']}   <- the number to drive to zero
   review flags fired  {fired}/{exp} expected""")
 
+    row = {"timestamp": datetime.now().isoformat(timespec="minutes"), "model": settings()["llm"]["chat_model"],
+           "skus": len(scored), "fields": s["fields"], "fixed_score": s["fixed_score"],
+           "model_score": s["model_score"], "overall_score": s["overall_score"],
+           "blank_flagged": s["blank_flagged"], "silent_missing": s["silent_missing"],
+           "flagged_errors": s["flagged_errors"], "silent_errors": s["silent_errors"]}
+    if image_scores:
+        t = {k: sum(x[k] for x in image_scores) for k in image_scores[0]}
+        precision = round(100 * t["label_correct"] / t["label_values"], 1) if t["label_values"] else None
+        caught = f"{t['wrong_caught']}/{t['wrong_planted']}"
+        print(f"""
+Image check ({len(image_scores)} SKU(s), {t['images']} images)
+  wrong images caught   {caught}   (planted wrong images flagged)
+  false alarms          {t['false_alarms']}   (correct images called wrong)
+  label-read precision  {precision}%   ({t['label_correct']}/{t['label_values']} values agree with gold)""")
+        row.update({"images": t["images"], "wrong_images_caught": caught,
+                    "image_false_alarms": t["false_alarms"], "label_precision": precision})
+    row["note"] = args.note
+
     out = ROOT / "results.csv"
-    new_file = not out.exists()
-    with open(out, "a", newline="", encoding="utf-8") as f:
-        w = csv.writer(f)
-        if new_file:
-            w.writerow(["timestamp", "model", "skus", "fields", "fixed_score", "model_score", "overall_score",
-                        "blank_flagged", "silent_missing", "flagged_errors", "silent_errors", "note"])
-        w.writerow([datetime.now().isoformat(timespec="minutes"), settings()["llm"]["chat_model"], len(scored),
-                    s["fields"], s["fixed_score"], s["model_score"], s["overall_score"], s["blank_flagged"],
-                    s["silent_missing"], s["flagged_errors"], s["silent_errors"], args.note])
+    append_result(out, row)
     print(f"\nAppended to {out.relative_to(ROOT)}")
 
 
