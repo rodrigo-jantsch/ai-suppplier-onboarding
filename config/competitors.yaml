@@ -18,7 +18,7 @@ sites:
     sitemap_filter: "type=products"
     search_url: "https://www.valleyvet.com/shop/?search_query={query}"   # results load with JavaScript, so not used
     robots_checked: true    # 2026-10-19: product pages allowed; /search.php and filtered listings disallowed
-    enabled: true
+    enabled: false          # 2026-10-20: returns HTTP 403 to our (honest) user agent: blocks scripts
 
   - name: chewy
     base_url: "https://www.chewy.com/"
@@ -36,4 +36,4 @@ sites:
     search_url: "https://www.tractorsupply.com/tsc/search/{query}"   # disallowed by robots.txt, so not used
     product_path_hint: "/tsc/product/"
     robots_checked: true    # 2026-10-19: "Disallow: /tsc/search*"; /tsc/product/ allowed; Crawl-delay: 1
-    enabled: true
+    enabled: false          # 2026-10-20: robots.txt times out for scripts (bot protection)

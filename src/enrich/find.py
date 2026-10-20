@@ -44,16 +44,20 @@ def _locs(xml: str) -> list[str]:
     return [u.strip().replace("&amp;", "&") for u in re.findall(r"<loc>\s*(.*?)\s*</loc>", xml, re.S)]
 
 
-def sitemap_urls(fetcher: Fetcher, site: dict, max_files: int = 20) -> list[str]:
-    """All product URLs listed in a site's sitemap (follows sitemap indexes)."""
+def sitemap_urls(fetcher: Fetcher, site: dict, max_files: int = 20) -> tuple[list[str], list[str]]:
+    """All product URLs listed in a site's sitemap (follows sitemap indexes).
+
+    Returns (urls, problems); problems say why a sitemap file gave nothing.
+    """
     cache = ROOT / "cache" / "sitemaps" / f"{site['name']}.json"
     if cache.exists():
         saved = json.loads(cache.read_text(encoding="utf-8"))
-        if time.time() - saved["saved_at"] < SITEMAP_MAX_AGE_DAYS * 86400:
-            return saved["urls"]
+        fresh = time.time() - saved["saved_at"] < SITEMAP_MAX_AGE_DAYS * 86400
+        if fresh and saved["urls"]:                       # an empty list is never trusted
+            return saved["urls"], []
 
     product_filter = site.get("sitemap_filter", "product")
-    todo, urls, seen, failed = [site["sitemap_url"]], [], set(), 0
+    todo, urls, seen, problems = [site["sitemap_url"]], [], set(), []
     while todo and len(seen) < max_files:
         sitemap = todo.pop(0)
         if sitemap in seen:
@@ -61,23 +65,27 @@ def sitemap_urls(fetcher: Fetcher, site: dict, max_files: int = 20) -> list[str]
         seen.add(sitemap)
         try:
             page = fetcher.get(sitemap)
-        except FetchError:
+        except FetchError as err:
             if sitemap == site["sitemap_url"]:
                 raise                                     # the site itself is unreachable
-            failed += 1
+            problems.append(f"{sitemap}: {err}")
             continue
         if page.status != 200:
+            problems.append(f"{sitemap}: HTTP {page.status}")
             continue
-        if "<sitemapindex" in page.html:
-            children = _locs(page.html)
-            todo += [c for c in children if product_filter in c] or children
+        locs = _locs(page.html)
+        if not locs:
+            start = " ".join(page.html[:120].split())
+            problems.append(f"{sitemap}: no <loc> entries (got: {start!r}); maybe a bot-check page")
+        elif "<sitemapindex" in page.html:
+            todo += [c for c in locs if product_filter in c] or locs
         else:
-            urls += _locs(page.html)
+            urls += locs
 
-    if urls and not failed:                               # only cache a complete download
+    if urls and not problems:                             # only cache a complete download
         cache.parent.mkdir(parents=True, exist_ok=True)
         cache.write_text(json.dumps({"saved_at": time.time(), "urls": urls}), encoding="utf-8")
-    return urls
+    return urls, problems
 
 
 def slug_words(url: str) -> str:
@@ -136,9 +144,10 @@ def find_candidates(fetcher: Fetcher, site: dict, row: InputRow, k: int = 5) -> 
     """Returns (candidates, note). The note explains an empty result."""
     try:
         if site.get("find_by", "search") == "sitemap":
-            urls = sitemap_urls(fetcher, site)
+            urls, problems = sitemap_urls(fetcher, site)
             found = rank_urls(urls, row, k)
-            return found, f"{len(urls)} sitemap URLs searched" if urls else "sitemap empty or unreachable"
+            note = f"{len(urls)} sitemap URLs searched" if urls else "no sitemap URLs"
+            return found, "; ".join([note, *problems])
         found = search_links(fetcher, site, row, k)
         return found, "" if found else "no product links on the search page (results may need JavaScript)"
     except (Blocked, FetchError) as err:

@@ -52,11 +52,10 @@ class ImageReading(BaseModel):
     reason: str = Field(description="One short sentence: what in the image supports that answer")
     brand: LabelValue = Field(description="Brand name printed on the package")
     size: LabelValue = Field(description="Net contents, e.g. '1 L', '16 oz', '60 count'")
-    ingredients: LabelValue = Field(
-        description="Active ingredient(s) WITH the strength or concentration printed with them, e.g. "
-                    "'12.5% tiamulin hydrogen fumarate'. Look across the whole label (product name line, "
-                    "'Active Ingredient' section) for the percentage or mg amount; leave it out only if "
-                    "none is printed.")
+    ingredients: LabelValue = Field(description="Name(s) of the active ingredient(s), e.g. 'tiamulin hydrogen fumarate'")
+    strength: LabelValue = Field(
+        description="Strength or concentration of the active ingredient as printed, e.g. '12.5%' or "
+                    "'125 mg/mL'. Often next to the brand name or in the 'Active Ingredient' section.")
     species: LabelValue = Field(description="LIST of animals the label says the product is for, e.g. ['Swine']")
     form: LabelValue = Field(description="LIST: product form as printed, e.g. ['Liquid Concentrate']")
 
@@ -113,6 +112,24 @@ def image_name(url: str) -> str:
 
 # ====================================================================== checks in code
 
+def with_strength(reading: ImageReading) -> ImageReading:
+    """Join the separately read strength onto the ingredient name:
+    '12.5%' + 'tiamulin hydrogen fumarate' -> '12.5% tiamulin hydrogen fumarate'.
+    (One item per field is filled far more reliably than a combined instruction.)"""
+    ing, strength = reading.ingredients, reading.strength
+    usable = (isinstance(ing.value, str) and ing.value and not numbers(ing.value)
+              and isinstance(strength.value, str) and numbers(strength.value) and strength.confidence != "low"
+              and numbers_in_quote(strength.value, strength.label_text))
+    if not usable:
+        return reading
+    quotes = [q for q in (strength.label_text, ing.label_text) if q]
+    reading.ingredients = LabelValue(
+        value=f"{strength.value.strip()} {ing.value.strip()}",
+        label_text=" … ".join(dict.fromkeys(quotes)) or None,
+        confidence=min(ing.confidence, strength.confidence, key=["low", "medium", "high"].index))
+    return reading
+
+
 def grounded(value: LabelValue) -> bool:
     """Every number in the value must be printed in the label text the model quoted."""
     return numbers_in_quote(value.value, value.label_text)
@@ -159,7 +176,7 @@ def check_images(row: InputRow, draft: Draft, flags: list[str],
             readings.append({"url": url, "file": name, "error": str(err)})
             continue
 
-        reading = read_fn(build_prompt(row), [(data, mime)], SYSTEM)
+        reading = with_strength(read_fn(build_prompt(row), [(data, mime)], SYSTEM))
         verdict = reading.shows_this_product
         if verdict == "yes" and not same_brand(row, reading.brand):
             verdict = "unsure"

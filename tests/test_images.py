@@ -34,6 +34,7 @@ GOOD_READING = {
     "brand": L("TiaGard", "TiaGard®"),
     "size": L("1 L", "1 Liter (33.8 fl oz)"),
     "ingredients": L("12.5% tiamulin hydrogen fumarate", "Tiamulin hydrogen fumarate 12.5%"),
+    "strength": L(None, None, "low"),
     "species": L(["Swine"], "For use in swine drinking water"),
     "form": L(["Liquid Concentrate"], "Liquid Concentrate"),
 }
@@ -208,3 +209,20 @@ def test_size_read_from_the_real_label_agrees():
     # What Gemini actually returned for VPS6-MAIN.jpg
     assert im.agrees("custom.sizes", ["1 L"], "One Liter", "One Liter (1.057 Quarts) (33.8 fl. oz; 1000 mL)")
     assert not im.agrees("custom.sizes", ["2 L"], "One Liter", "One Liter (1.057 Quarts) (33.8 fl. oz; 1000 mL)")
+
+
+def test_strength_read_separately_is_joined_to_the_ingredient(vps6, draft):
+    # What Gemini actually did on the real labels: name without strength. Now strength has its own field.
+    reading = {**GOOD_READING, "ingredients": L("Tiamulin hydrogen fumarate", "Tiamulin hydrogen fumarate"),
+               "strength": L("12.5%", "TiaGard 12.5%")}
+    d, flags, report, _ = run(vps6, draft, reading)
+    got = report["images"][0]["reading"]["ingredients"]
+    assert got["value"] == "12.5% Tiamulin hydrogen fumarate"
+    assert got["label_text"] == "TiaGard 12.5% … Tiamulin hydrogen fumarate"
+    assert not any(f.startswith("info.ingredients") for f in flags)              # agrees with the draft
+
+
+def test_strength_not_on_its_quoted_label_text_is_not_joined():
+    r = im.ImageReading.model_validate({**GOOD_READING, "ingredients": L("tiamulin", "tiamulin"),
+                                        "strength": L("45%", "TiaGard 12.5%")})
+    assert im.with_strength(r).ingredients.value == "tiamulin"

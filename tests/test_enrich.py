@@ -312,3 +312,19 @@ def test_unreachable_site_is_reported_and_others_still_run(tmp_path, vps6, draft
     tsc_report, vv_report = report["sites"]
     assert "ReadTimeout" in tsc_report["note"] and "not crawling this site" in tsc_report["note"]
     assert vv_report["matched_url"]                                   # Valley Vet still ran
+
+
+def test_sitemap_problems_are_explained_and_empty_cache_is_ignored(tmp_path, vps6):
+    import json
+    import src.enrich.find as find
+    cache = find.ROOT / "cache" / "sitemaps" / "valleyvet.json"
+    cache.parent.mkdir(parents=True, exist_ok=True)
+    cache.write_text(json.dumps({"saved_at": 9e12, "urls": []}))     # left behind by an older version
+    get = internet({f"{VV}/xmlsitemap.php": "<html>Checking your browser...</html>"})
+    cands, note = find_candidates(fetcher(tmp_path, get), VV_SITE, vps6)
+    assert cands == [] and "no <loc> entries" in note and "Checking your browser" in note
+
+    def forbidden(url):
+        return (403, "") if "xmlsitemap" in url else internet()(url)
+    _, note = find_candidates(fetcher(tmp_path / "b", forbidden), VV_SITE, vps6)
+    assert "HTTP 403" in note
